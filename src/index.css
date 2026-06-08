@@ -1,15 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 @config "../tailwind.config.js";
 
 @layer base {
   body {
-    @apply bg-[#F8FAFC] text-slate-600 font-sans antialiased selection:bg-brand-purple selection:text-white overflow-x-hidden;
+    @apply bg-[#F8FAFC] text-slate-600 font-sans antialiased selection:bg-brand-purple selection:text-white overflow-x-hidden transition-colors duration-200;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-outfit text-slate-900 tracking-tight;
+    @apply font-outfit text-slate-900 dark:text-slate-50 tracking-tight;
   }
 }
 
@@ -37,14 +38,14 @@
   }
 
   .glassmorphism-nav {
-    background: rgba(248, 250, 252, 0.75);
+    background-color: rgba(248, 250, 252, 0.75);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-700 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400;
   }
 
   .bg-gradient-primary {
@@ -103,5 +104,69 @@
 /* Expand layout globally to resolve large left and right gaps on widescreen displays */
 .max-w-7xl {
   max-width: 1600px !important;
+}
+
+/* Scrolled Header, Body and Fallbacks for Dark Theme */
+.dark {
+  /* Body theme variable overrides */
+  --color-background: #030712 !important;
+
+  /* Force glassmorphism navbar color in dark mode */
+  .glassmorphism-nav {
+    background-color: rgba(10, 22, 38, 0.85) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+
+  /* Utility-safe dark mode selectors */
+  .bg-white:not([class*="dark:bg-"]) {
+    background-color: #0b1329 !important;
+  }
+  .bg-slate-50:not([class*="dark:bg-"]) {
+    background-color: #0f172a !important;
+  }
+  .bg-slate-100:not([class*="dark:bg-"]) {
+    background-color: #1e293b !important;
+  }
+  .bg-slate-50\/50:not([class*="dark:bg-"]) {
+    background-color: rgba(15, 23, 42, 0.5) !important;
+  }
+  .bg-slate-100\/50:not([class*="dark:bg-"]) {
+    background-color: rgba(30, 41, 59, 0.5) !important;
+  }
+  .bg-slate-100\/40:not([class*="dark:bg-"]) {
+    background-color: rgba(30, 41, 59, 0.4) !important;
+  }
+  .bg-slate-100\/30:not([class*="dark:bg-"]) {
+    background-color: rgba(30, 41, 59, 0.3) !important;
+  }
+
+  /* Typography fallback overrides */
+  .text-slate-900:not([class*="dark:text-"]):not(.text-gradient) {
+    color: #f8fafc !important;
+  }
+  .text-slate-800:not([class*="dark:text-"]):not(.text-gradient) {
+    color: #f1f5f9 !important;
+  }
+  .text-slate-700:not([class*="dark:text-"]) {
+    color: #e2e8f0 !important;
+  }
+  .text-slate-600:not([class*="dark:text-"]) {
+    color: #cbd5e1 !important;
+  }
+  .text-slate-500:not([class*="dark:text-"]) {
+    color: #94a3b8 !important;
+  }
+  .text-slate-400:not([class*="dark:text-"]) {
+    color: #64748b !important;
+  }
+
+  /* Borders fallback overrides */
+  .border-slate-200:not([class*="dark:border-"]),
+  .border-slate-200\/80:not([class*="dark:border-"]),
+  .border-slate-200\/60:not([class*="dark:border-"]),
+  .border-slate-200\/50:not([class*="dark:border-"]),
+  .border-slate-100:not([class*="dark:border-"]) {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
 }
 

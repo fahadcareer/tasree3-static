@@ -24,6 +24,12 @@ export default function About({ onRequestDemo }) {
       role: "Consultant - Digital Transformation & Partner (India Branch)", 
       desc: "Advising enterprise partners on workflow optimization, digital audits, and leading process consulting operations in India.", 
       initial: "YA" 
+    },
+    { 
+      name: "Zubair Ali", 
+      role: "Consultant - Digital Solutions & Partner(India Branch)", 
+      desc: "Designing and scaling digital workflow systems, enabling enterprise automation, and managing digital solution deliveries for India branch.", 
+      initial: "ZA" 
     }
   ];
 
@@ -163,7 +169,7 @@ export default function About({ onRequestDemo }) {
             <h2 className="text-3xl font-bold font-outfit text-slate-900 mt-2">Tasree3 Leadership Team</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {leaders.map((leader, idx) => (
               <div 
                 key={idx}

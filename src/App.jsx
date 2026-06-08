@@ -36,7 +36,7 @@ export default function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="flex flex-col min-h-screen bg-background text-slate-600 relative overflow-x-hidden selection:bg-brand-purple selection:text-white">
+      <div className="flex flex-col min-h-screen bg-background dark:bg-slate-950 text-slate-600 dark:text-slate-300 relative overflow-x-hidden selection:bg-brand-purple selection:text-white transition-colors duration-200">
         {/* Navbar */}
         <Navbar onRequestDemo={openDemoModal} />
 
