@@ -56,6 +56,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold uppercase tracking-wider text-slate-900 mb-4">Platform</h4>
             <ul className="space-y-2.5">
               <li><Link to="/features" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Process Modeling</Link></li>
+              <li><Link to="/process-management" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Process Management</Link></li>
               <li><Link to="/process-mining" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Process Mining</Link></li>
               <li><Link to="/governance" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Compliance & Risks</Link></li>
               <li><Link to="/ai-features" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">AI Platform Operations</Link></li>

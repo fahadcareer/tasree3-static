@@ -1,0 +1,4952 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process Management · Tasree</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --surface: #ffffff;
+            --surface-2: #f6f8f8;
+            --surface-3: #eef3f2;
+            --border: #e3e9e8;
+            --border-strong: #cdd8d6;
+            --text: #0d1f1c;
+            --text-muted: #5b6b68;
+            --text-subtle: #93a29f;
+            --accent: #2563eb;
+            /* blue */
+            --accent-hover: #1d4ed8;
+            --accent-soft: #e8effe;
+            --ink: #0b1f3a;
+            /* deep navy blue */
+            --ink-2: #0f2748;
+            --gold: #c9a23f;
+            --success: #10b981;
+            --shadow-sm: 0 1px 2px rgba(11, 31, 58, 0.05);
+            --shadow: 0 1px 3px rgba(11, 31, 58, 0.07), 0 1px 2px rgba(11, 31, 58, 0.05);
+            --shadow-md: 0 6px 18px rgba(11, 31, 58, 0.08), 0 2px 6px rgba(11, 31, 58, 0.05);
+            --shadow-lg: 0 18px 44px rgba(11, 31, 58, 0.12), 0 6px 12px rgba(11, 31, 58, 0.06);
+            --max: 1180px;
+        }
+
+        /* ---------- DARK THEME ---------- */
+        [data-theme="dark"] {
+            --bg: #0a1626;
+            --surface: #0f1f33;
+            --surface-2: #0e1c2e;
+            --surface-3: #13263d;
+            --border: #1e3350;
+            --border-strong: #2a4567;
+            --text: #eaf1f8;
+            --text-muted: #9fb2c8;
+            --text-subtle: #6f849c;
+            --accent: #3b82f6;
+            --accent-hover: #60a5fa;
+            --accent-soft: #15294a;
+            --ink: #060f1c;
+            --ink-2: #0a1830;
+            --gold: #d8b659;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.4);
+            --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 18px 44px rgba(0, 0, 0, 0.6), 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        [data-theme="dark"] header.nav {
+            background: rgba(10, 22, 38, 0.85);
+        }
+
+        [data-theme="dark"] .trust .logos span {
+            opacity: 0.6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            transition: background 300ms ease, color 300ms ease;
+        }
+
+        header.nav,
+        .trust,
+        .sec,
+        .why-card,
+        .panel-visual,
+        .mrow,
+        .tab,
+        .metrics,
+        footer {
+            transition: background 300ms ease, color 300ms ease, border-color 300ms ease;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .wrap {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            position: relative;
+        }
+
+        h1,
+        h2,
+        h3 {
+            letter-spacing: -0.02em;
+            line-height: 1.12;
+            font-weight: 700;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .eyebrow::before {
+            content: none;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 12px 22px;
+            border: 1px solid transparent;
+            transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text);
+            border-color: var(--border-strong);
+        }
+
+        .btn-ghost:hover {
+            background: var(--surface-2);
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-light {
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-light:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-white {
+            background: #fff;
+            color: var(--ink);
+        }
+
+        .btn-white:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-1px);
+        }
+
+        /* ---------- NAV ---------- */
+        header.nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 66px;
+            gap: 12px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            font-size: 20px;
+            letter-spacing: -0.03em;
+        }
+
+        .logo-mark {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent), #1e3a8a);
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 15px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .logo-mark svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .brand span.three {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            font-size: 14.5px;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: color 150ms;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-cta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            cursor: pointer;
+            flex: none;
+            border: 1px solid var(--border-strong);
+            background: var(--surface-2);
+            color: var(--text);
+            place-items: center;
+            transition: all 160ms;
+        }
+
+        .nav-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .nav-toggle svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .nav-toggle .x {
+            display: none;
+        }
+
+        body.menu-open .nav-toggle .x {
+            display: block;
+        }
+
+        body.menu-open .nav-toggle .bars {
+            display: none;
+        }
+
+        /* mobile slide-down menu */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            inset: 66px 0 0 0;
+            z-index: 49;
+            background: var(--bg);
+            border-top: 1px solid var(--border);
+            padding: 18px 24px 40px;
+            overflow-y: auto;
+            flex-direction: column;
+        }
+
+        .mobile-menu a.mm-link {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text);
+            padding: 15px 4px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .mobile-menu a.mm-link::after {
+            content: "›";
+            color: var(--text-subtle);
+            font-size: 20px;
+        }
+
+        .mobile-menu .mm-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .mobile-menu .mm-actions .btn {
+            justify-content: center;
+            width: 100%;
+            font-size: 16px;
+            padding: 14px 22px;
+        }
+
+        body.menu-open {
+            overflow: hidden;
+        }
+
+        body.menu-open .mobile-menu {
+            display: flex;
+        }
+
+        @media (max-width: 980px) {
+            .nav-links {
+                display: none;
+            }
+
+            .nav-cta .btn-ghost,
+            .nav-cta .btn-primary,
+            .export-wrap {
+                display: none;
+            }
+
+            .nav-toggle {
+                display: grid;
+            }
+        }
+
+        @media (min-width: 981px) {
+            .mobile-menu {
+                display: none !important;
+            }
+        }
+
+        /* ---------- HERO ---------- */
+        .hero {
+            background:
+                radial-gradient(900px 500px at 85% -10%, rgba(37, 99, 235, 0.10), transparent 60%),
+                radial-gradient(700px 460px at 5% 10%, rgba(29, 78, 216, 0.07), transparent 55%),
+                var(--bg);
+            padding: 84px 0 72px;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 56px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+        }
+
+        .hero h1 .hl {
+            color: var(--accent);
+        }
+
+        .hero p.lead {
+            font-size: 19px;
+            color: var(--text-muted);
+            margin: 22px 0 32px;
+            max-width: 540px;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 26px;
+            margin-top: 34px;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta div {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-meta strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: inline-block;
+        }
+
+        .badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: var(--accent-soft);
+            color: var(--accent-hover);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 22px;
+            border: 1px solid #cdddf7;
+        }
+
+        /* hero visual, process board mock */
+        .board {
+            background: var(--ink);
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            color: #fff;
+            background-image:
+                radial-gradient(600px 300px at 90% -20%, rgba(37, 99, 235, 0.22), transparent 60%);
+        }
+
+        .board-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .board-top i {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            display: block;
+        }
+
+        .board-top span {
+            margin-left: 8px;
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, 0.55);
+            font-weight: 500;
+        }
+
+        .flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 6px;
+            margin: 6px 0 18px;
+            position: relative;
+        }
+
+        .flow-token {
+            position: absolute;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #7db5ff;
+            box-shadow: 0 0 12px 3px rgba(125, 181, 255, 0.8);
+            transform: translateY(-50%);
+            z-index: 4;
+            pointer-events: none;
+            animation: flowToken 3.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+        }
+
+        .node {
+            flex: 1;
+            text-align: center;
+            font-size: 11.5px;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 8px;
+            padding: 12px 6px;
+            color: rgba(255, 255, 255, 0.92);
+            transition: background 300ms ease, border-color 300ms ease;
+        }
+
+        .node.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            animation: pulseNode 2.2s ease-in-out infinite;
+        }
+
+        .arrow {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        .board-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .bstat {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            padding: 14px 12px;
+        }
+
+        .bstat .n {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .bstat .l {
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 2px;
+        }
+
+        .bstat .n.g {
+            color: #7db5ff;
+        }
+
+        .ai-chip {
+            position: absolute;
+            right: -14px;
+            bottom: 26px;
+            background: #fff;
+            color: var(--ink);
+            border-radius: 12px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            max-width: 220px;
+        }
+
+        .ai-chip .spark {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+        }
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .ai-chip {
+                display: none;
+            }
+        }
+
+        /* ---------- TRUST STRIP ---------- */
+        .trust {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: var(--surface-2);
+            padding: 26px 0;
+        }
+
+        .trust-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .trust p {
+            font-size: 13px;
+            color: var(--text-subtle);
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .trust .logos {
+            display: flex;
+            gap: 38px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .trust .logos span {
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--text-subtle);
+            letter-spacing: -0.02em;
+            opacity: 0.8;
+        }
+
+        /* ---------- SECTION SHELL ---------- */
+        .sec {
+            padding: 84px 0;
+        }
+
+        .sec-head {
+            max-width: 680px;
+            margin: 0 auto 52px;
+            text-align: center;
+        }
+
+        .sec-head h2 {
+            font-size: 38px;
+        }
+
+        .sec-head p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        /* ---------- CAPABILITY TABS ---------- */
+        .tab-clusters {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .tab-cluster {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tab-cluster+.tab-cluster {
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .tab-cluster+.tab-cluster::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 6px;
+            bottom: 6px;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .tc-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            font-size: 14.5px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border-strong);
+            background: #fff;
+            color: var(--text-muted);
+            transition: all 150ms;
+        }
+
+        .tab .tn {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 0.02em;
+        }
+
+        .tab:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .tab.active {
+            background: var(--ink);
+            color: #fff;
+            border-color: var(--ink);
+        }
+
+        .tab.active .tn {
+            color: #7db5ff;
+        }
+
+        @media (max-width: 620px) {
+            .tab-clusters {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 24px;
+            }
+
+            .tab-cluster+.tab-cluster {
+                padding-left: 0;
+            }
+
+            .tab-cluster+.tab-cluster::before {
+                display: none;
+            }
+        }
+
+        .panel {
+            display: none;
+        }
+
+        .panel.active {
+            display: block;
+            animation: fade 240ms ease;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* ---------- PROCESS ANIMATIONS ---------- */
+        @keyframes pulseNode {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.25);
+            }
+
+            50% {
+                box-shadow: 0 0 0 9px rgba(37, 99, 235, 0.05);
+            }
+        }
+
+        @keyframes flowToken {
+            0% {
+                left: 4%;
+                opacity: 0;
+            }
+
+            8% {
+                opacity: 1;
+            }
+
+            92% {
+                opacity: 1;
+            }
+
+            100% {
+                left: 96%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes dashMove {
+            to {
+                background-position: 220px 0;
+            }
+        }
+
+        @keyframes barGrow {
+            from {
+                transform: scaleY(0);
+            }
+
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        @keyframes floatChip {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-7px);
+            }
+        }
+
+        @keyframes spark {
+
+            0%,
+            100% {
+                opacity: 0.5;
+                transform: scale(0.9) rotate(0deg);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.1) rotate(90deg);
+            }
+        }
+
+        /* reveal-on-scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity 620ms cubic-bezier(0.4, 0, 0.2, 1), transform 620ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.in {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .flow-token,
+            .node.active {
+                animation: none !important;
+            }
+        }
+
+        /* theme toggle button */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 1px solid var(--border-strong);
+            background: var(--surface-2);
+            display: grid;
+            place-items: center;
+            color: var(--text-muted);
+            transition: all 160ms;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .theme-toggle svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .theme-toggle .moon {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-toggle .sun {
+            display: none;
+        }
+
+        [data-theme="dark"] .theme-toggle .moon {
+            display: block;
+        }
+
+        /* ---------- ACCENT / PALETTE SWITCHER ---------- */
+        .palette-wrap {
+            position: relative;
+        }
+
+        .palette-pop {
+            position: absolute;
+            top: 50px;
+            right: 0;
+            z-index: 60;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: var(--shadow-lg);
+            padding: 14px;
+            width: 212px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-6px);
+            transition: opacity 160ms, transform 160ms, visibility 160ms;
+        }
+
+        .palette-pop.open {
+            opacity: 1;
+            visibility: visible;
+            transform: none;
+        }
+
+        .palette-pop .ttl {
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            margin-bottom: 10px;
+        }
+
+        .swatches {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .sw {
+            height: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: transform 120ms;
+        }
+
+        .sw:hover {
+            transform: scale(1.08);
+        }
+
+        .sw.sel {
+            border-color: var(--text);
+            box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px currentColor;
+        }
+
+        .palette-pop .custom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .palette-pop .custom input[type=color] {
+            width: 38px;
+            height: 28px;
+            border: 1px solid var(--border-strong);
+            border-radius: 7px;
+            background: none;
+            cursor: pointer;
+            padding: 2px;
+        }
+
+        @media (max-width: 900px) {
+            .palette-pop {
+                right: 0;
+                left: auto;
+                max-width: calc(100vw - 32px);
+            }
+        }
+
+        .panel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .panel-grid .copy h3 {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .panel-grid .copy p {
+            color: var(--text-muted);
+            font-size: 16.5px;
+            margin-bottom: 22px;
+        }
+
+        .checklist {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checklist li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 15px;
+        }
+
+        .checklist .ck {
+            flex: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 13px;
+            margin-top: 1px;
+        }
+
+        .panel-visual {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 26px;
+            min-height: 320px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .panel-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+        }
+
+        /* mini chart bars */
+        .bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            height: 150px;
+            padding-top: 8px;
+        }
+
+        .bars .bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--accent), #1e3a8a);
+            border-radius: 6px 6px 0 0;
+            position: relative;
+            transform-origin: bottom;
+        }
+
+        .panel.active .bars .bar {
+            animation: barGrow 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
+        .panel.active .bars .bar:nth-child(2) {
+            animation-delay: .08s;
+        }
+
+        .panel.active .bars .bar:nth-child(3) {
+            animation-delay: .16s;
+        }
+
+        .panel.active .bars .bar:nth-child(4) {
+            animation-delay: .24s;
+        }
+
+        .panel.active .bars .bar:nth-child(5) {
+            animation-delay: .32s;
+        }
+
+        .bars .bar span {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+        }
+
+        .bars .bar small {
+            position: absolute;
+            bottom: -22px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-subtle);
+        }
+
+        .panel-visual .vlabel {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .miniflow {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .mrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mrow .ic {
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 13px;
+            flex: none;
+        }
+
+        .mrow .t {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .mrow .s {
+            font-size: 12px;
+            color: var(--text-subtle);
+        }
+
+        .mrow .pct {
+            margin-left: auto;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* ---------- SOLUTIONS BY INDUSTRY ---------- */
+        .sol-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .sol-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px 28px;
+            transition: all 200ms;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sol-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-4px);
+            border-color: var(--border-strong);
+        }
+
+        .sol-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+        }
+
+        .sol-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .sol-ic {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+        }
+
+        .sol-ic svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .sol-head h3 {
+            font-size: 20px;
+        }
+
+        .sol-card>p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .sol-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .sol-tags span {
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--accent-hover);
+            background: var(--accent-soft);
+            padding: 5px 11px;
+            border-radius: 999px;
+        }
+
+        /* module mapping chips on industry cards */
+        .sol-mods {
+            margin: 2px 0 18px;
+        }
+
+        .sol-mods .sm-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            margin-bottom: 9px;
+        }
+
+        .sol-mods .sm-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .sol-mod {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 5px 11px 5px 9px;
+            border-radius: 999px;
+        }
+
+        .sol-mod .smk {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            font-size: 11px;
+            font-weight: 800;
+            flex: none;
+        }
+
+        @media (max-width:760px) {
+            .sol-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- SAMPLE-PROCESS CTA LINK ---------- */
+        .sol-cta {
+            margin-top: auto;
+            padding-top: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+            transition: gap 160ms, color 160ms;
+        }
+
+        .sol-cta::after {
+            content: "→";
+            transition: transform 160ms;
+        }
+
+        .sol-card:hover .sol-cta {
+            color: var(--accent-hover);
+        }
+
+        .sol-card:hover .sol-cta::after {
+            transform: translateX(3px);
+        }
+
+        /* ---------- SOLUTIONS BY FUNCTION ---------- */
+        .func-head {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin: 56px 0 26px;
+        }
+
+        .func-head h3 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            white-space: nowrap;
+        }
+
+        .func-head .fh-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .func-head .fh-tag {
+            font-size: 13px;
+            color: var(--text-subtle);
+            white-space: nowrap;
+        }
+
+        .func-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .func-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 22px 20px;
+            transition: all 200ms;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .func-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+            border-color: var(--border-strong);
+        }
+
+        .func-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 9px;
+        }
+
+        .func-ic {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            flex: none;
+        }
+
+        .func-ic svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .func-top h4 {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .func-card>p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+            line-height: 1.5;
+        }
+
+        @media (max-width:900px) {
+            .func-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width:600px) {
+            .func-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- WHY / DIFFERENTIATORS ---------- */
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .why-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px 24px;
+            transition: all 180ms;
+        }
+
+        .why-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+            border-color: var(--border-strong);
+        }
+
+        .why-ic {
+            width: 46px;
+            height: 46px;
+            border-radius: 11px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            margin-bottom: 18px;
+        }
+
+        .why-ic svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .why-card h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .why-card p {
+            font-size: 14.5px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 900px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- SHOWCASE ---------- */
+        .showcase {
+            background:
+                radial-gradient(800px 460px at 88% 10%, rgba(37, 99, 235, 0.28), transparent 60%),
+                var(--ink);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 0.92fr 1.08fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .showcase-copy h2 {
+            font-size: 36px;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .showcase-copy p {
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.72);
+            max-width: 460px;
+            margin-bottom: 26px;
+        }
+
+        .showcase-pills {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .showcase-pills span {
+            font-size: 14.5px;
+            color: rgba(255, 255, 255, 0.85);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .showcase-pills b {
+            color: #7db5ff;
+            font-weight: 700;
+            min-width: 44px;
+        }
+
+        .showcase-pills span::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #7db5ff;
+            box-shadow: 0 0 10px 2px rgba(125, 181, 255, 0.7);
+        }
+
+        .showcase-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 14px;
+            filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.5));
+            animation: floatChip 6s ease-in-out infinite;
+        }
+
+        @media (max-width: 900px) {
+            .showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .showcase-copy h2 {
+                font-size: 28px;
+            }
+        }
+
+        /* ---------- SOVEREIGN / REGION ---------- */
+        .region-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 56px;
+            align-items: center;
+        }
+
+        .region .feat {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .region .feat .row {
+            display: flex;
+            gap: 16px;
+        }
+
+        .region .feat .ic {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: var(--ink);
+            color: #fff;
+            display: grid;
+            place-items: center;
+            flex: none;
+        }
+
+        .region .feat h4 {
+            font-size: 16.5px;
+            margin-bottom: 4px;
+        }
+
+        .region .feat p {
+            font-size: 14.5px;
+            color: var(--text-muted);
+        }
+
+        .rtl-card {
+            background: linear-gradient(150deg, var(--ink), var(--ink-2));
+            color: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .rtl-card .ttl {
+            font-size: 13px;
+            color: var(--gold);
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .rtl-card .ar {
+            direction: rtl;
+            text-align: right;
+            font-size: 30px;
+            font-weight: 800;
+            margin: 14px 0 4px;
+        }
+
+        .rtl-card .en {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        .rtl-card hr {
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+            margin: 22px 0;
+        }
+
+        .rtl-card .mini {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .rtl-card .mini span {
+            font-size: 12.5px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            padding: 6px 12px;
+            border-radius: 999px;
+        }
+
+        @media (max-width:900px) {
+            .region-grid {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+        }
+
+        /* ---------- CTA ---------- */
+        .cta-band {
+            background:
+                radial-gradient(700px 360px at 80% 0%, rgba(37, 99, 235, 0.30), transparent 60%),
+                var(--ink);
+            color: #fff;
+            border-radius: 24px;
+            padding: 60px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cta-band h2 {
+            font-size: 38px;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .cta-band p {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.72);
+            margin: 18px auto 30px;
+            max-width: 540px;
+        }
+
+        .cta-band .hero-cta {
+            justify-content: center;
+        }
+
+        /* ---------- FOOTER ---------- */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 56px 0 30px;
+            background: var(--surface-2);
+        }
+
+        .foot-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            gap: 32px;
+        }
+
+        .foot-grid h5 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-subtle);
+            margin-bottom: 16px;
+        }
+
+        .foot-grid a {
+            display: block;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            transition: color 150ms;
+        }
+
+        .foot-grid a:hover {
+            color: var(--accent);
+        }
+
+        .foot-about p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin: 14px 0 16px;
+            max-width: 280px;
+        }
+
+        .foot-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-subtle);
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        @media (max-width:900px) {
+            .foot-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 28px;
+            }
+        }
+
+        /* toast */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(120%);
+            background: var(--ink);
+            color: #fff;
+            padding: 14px 22px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 100;
+            transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast .tk {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            display: grid;
+            place-items: center;
+            font-size: 12px;
+        }
+
+        /* ---------- EXPORT POPOVER ---------- */
+        .export-pop {
+            width: 244px;
+        }
+
+        .export-opt {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            width: 100%;
+            text-align: left;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 11px 12px;
+            cursor: pointer;
+            color: var(--text);
+            margin-top: 8px;
+            transition: all 140ms;
+        }
+
+        .export-opt:first-of-type {
+            margin-top: 4px;
+        }
+
+        .export-opt:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .export-opt .eo-ic {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            flex: none;
+            background: var(--surface-3);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+        }
+
+        .export-opt .eo-ic svg {
+            width: 19px;
+            height: 19px;
+        }
+
+        .export-opt .eo-txt {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .export-opt .eo-txt b {
+            font-size: 13.5px;
+            font-weight: 700;
+        }
+
+        .export-opt .eo-txt small {
+            font-size: 11.5px;
+            color: var(--text-subtle);
+        }
+
+        /* ---------- MODULE WHEEL ---------- */
+        .wheel-wrap {
+            display: grid;
+            grid-template-columns: 0.92fr 1.08fr;
+            gap: 52px;
+            align-items: center;
+        }
+
+        .wheel-stage {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .wheel-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            overflow: visible;
+        }
+
+        .w-ring-dash {
+            fill: none;
+            stroke: var(--border-strong);
+            stroke-width: 1.4;
+            stroke-dasharray: 2 7;
+            opacity: 0.8;
+        }
+
+        .w-wedge {
+            stroke: var(--bg);
+            stroke-width: 4;
+            transition: opacity 200ms, transform 260ms cubic-bezier(.2, .8, .2, 1);
+            transform-origin: 300px 300px;
+            cursor: default;
+        }
+
+        .wheel-svg g.wedge-g:hover .w-wedge {
+            opacity: 0.9;
+        }
+
+        .w-badge {
+            fill: rgba(255, 255, 255, 0.92);
+        }
+
+        .w-badge-t {
+            fill: var(--ink);
+            font: 800 15px 'Inter', sans-serif;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        .w-mod-t {
+            fill: #fff;
+            font: 700 15px 'Inter', sans-serif;
+            text-anchor: middle;
+            letter-spacing: -0.01em;
+        }
+
+        .w-mod-t.b {
+            font-weight: 800;
+        }
+
+        .w-hub {
+            fill: var(--ink);
+            stroke: var(--accent);
+            stroke-width: 2;
+        }
+
+        .w-hub-k {
+            fill: var(--gold);
+            font: 800 12px 'Inter', sans-serif;
+            text-anchor: middle;
+            letter-spacing: 0.14em;
+        }
+
+        .w-hub-t {
+            fill: #fff;
+            font: 800 22px 'Inter', sans-serif;
+            text-anchor: middle;
+        }
+
+        .w-hub-s {
+            fill: rgba(255, 255, 255, 0.62);
+            font: 500 11px 'Inter', sans-serif;
+            text-anchor: middle;
+            letter-spacing: 0.03em;
+        }
+
+        .w-spoke {
+            stroke: var(--border-strong);
+            stroke-width: 1.4;
+        }
+
+        .w-dot {
+            fill: var(--accent);
+        }
+
+        .w-chip rect {
+            fill: var(--surface);
+            stroke: var(--border);
+            stroke-width: 1.2;
+            filter: drop-shadow(0 2px 5px rgba(11, 31, 58, 0.08));
+        }
+
+        .w-chip text {
+            fill: var(--text);
+            font: 600 11px 'Inter', sans-serif;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        .wheel-copy .eyebrow {
+            margin-bottom: 14px;
+        }
+
+        .wheel-copy h2 {
+            font-size: 34px;
+            margin-bottom: 14px;
+        }
+
+        .wheel-copy>p {
+            color: var(--text-muted);
+            font-size: 16.5px;
+            margin-bottom: 24px;
+            max-width: 460px;
+        }
+
+        .mod-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mod-list li {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .mod-list .mn {
+            flex: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            background: var(--accent-soft);
+            color: var(--accent);
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 14px;
+            margin-top: 1px;
+        }
+
+        .mod-list .mt b {
+            font-size: 15px;
+        }
+
+        .mod-list .mt span {
+            display: block;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+
+        .wheel-tag {
+            display: inline-block;
+            margin-top: 22px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .wheel-tag b {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        @media (max-width: 900px) {
+            .wheel-wrap {
+                grid-template-columns: 1fr;
+                gap: 36px;
+            }
+        }
+
+        /* ---------- PRODUCT SCREENSHOTS / ISOMETRIC ---------- */
+        .iso-stage {}
+
+        .shot {
+            border-radius: 13px;
+            overflow: hidden;
+            background: #fff;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .shot-bar {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 9px 13px;
+            background: var(--surface-3);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .shot-bar i {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--border-strong);
+        }
+
+        .shot-bar i.r {
+            background: #ef6a5f;
+        }
+
+        .shot-bar i.y {
+            background: #f4bd4f;
+        }
+
+        .shot-bar i.g {
+            background: #5bc46b;
+        }
+
+        .shot-bar span {
+            margin-left: 6px;
+            font-size: 11px;
+            color: var(--text-subtle);
+            font-weight: 500;
+        }
+
+        .shot img {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .iso,
+        .iso-r {
+            transition: transform 520ms cubic-bezier(.2, .8, .2, 1), box-shadow 520ms cubic-bezier(.2, .8, .2, 1);
+            will-change: transform;
+        }
+
+        .iso:hover,
+        .iso-r:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 44px 90px rgba(11, 31, 58, 0.20);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .product-grid.flip .copy {
+            order: 2;
+        }
+
+        .product-grid .copy h3 {
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
+
+        .product-grid .copy p {
+            color: var(--text-muted);
+            font-size: 16px;
+            margin-bottom: 18px;
+        }
+
+        @media (max-width:900px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .product-grid.flip .copy {
+                order: 0;
+            }
+        }
+
+        .gallery-dark {
+            background: radial-gradient(820px 460px at 86% 8%, rgba(37, 99, 235, 0.26), transparent 60%), var(--ink);
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .gallery-dark .sec-head h2 {
+            color: #fff;
+        }
+
+        .gallery-dark .sec-head p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .gallery-dark .shot {
+            border-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+        }
+
+        .gallery-dark .shot-bar {
+            background: #0b1830;
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .gallery-dark .shot-bar span {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .gallery-dark .shot-bar i {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .shot-cap {
+            font-size: 13.5px;
+            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .shot-cap .k {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background: var(--accent-soft);
+            padding: 4px 9px;
+            border-radius: 6px;
+        }
+
+        .gallery-dark .shot-cap {
+            color: rgba(255, 255, 255, 0.82);
+        }
+
+        .gallery-dark .shot-cap .k {
+            color: #7db5ff;
+            background: rgba(125, 181, 255, 0.14);
+        }
+
+        /* ---------- APQC PCF CASCADE ---------- */
+        .apqc-cascade {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .apqc-row {
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 18px;
+            align-items: stretch;
+        }
+
+        .apqc-rail {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .apqc-badge {
+            width: 100%;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            color: #fff;
+            border-radius: 11px;
+            padding: 12px 8px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .apqc-badge .bx {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            opacity: 0.82;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        .apqc-conn {
+            position: relative;
+            flex: 1;
+            width: 3px;
+            min-height: 26px;
+            border-radius: 2px;
+            background-image: linear-gradient(var(--accent) 46%, transparent 46%);
+            background-size: 3px 13px;
+            background-repeat: repeat-y;
+            opacity: 0.85;
+            animation: apqcDrip 0.8s linear infinite;
+        }
+
+        .apqc-conn::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 7px solid var(--accent);
+        }
+
+        @keyframes apqcDrip {
+            to {
+                background-position: 0 13px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .apqc-conn {
+                animation: none;
+            }
+        }
+
+        .apqc-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 18px 20px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 16px;
+            transition: transform 180ms, box-shadow 180ms;
+        }
+
+        .apqc-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateX(4px);
+        }
+
+        .apqc-card .ac-code {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+        }
+
+        .apqc-card .ac-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 3px 0 6px;
+            color: var(--text);
+        }
+
+        .apqc-card .ac-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 11px;
+        }
+
+        .apqc-card .ac-meta {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 5px 11px;
+            border-radius: 999px;
+        }
+
+        .apqc-note {
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--text-subtle);
+            margin-top: 20px;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        [data-theme="dark"] .apqc-card {
+            background: var(--surface);
+        }
+
+        @media (max-width:620px) {
+            .apqc-row {
+                grid-template-columns: 96px 1fr;
+                gap: 12px;
+            }
+
+            .apqc-card .ac-title {
+                font-size: 16px;
+            }
+        }
+
+        /* ---------- PROCESS INTERRELATIONSHIPS ---------- */
+        .ir-toggle {
+            display: inline-flex;
+            gap: 6px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 5px;
+            margin: 0 auto 28px;
+        }
+
+        .ir-toggle button {
+            border: none;
+            background: transparent;
+            font: 600 14px 'Inter', sans-serif;
+            color: var(--text-muted);
+            padding: 9px 22px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 150ms;
+        }
+
+        .ir-toggle button.active {
+            background: var(--ink);
+            color: #fff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ir-map-wrap {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ir-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            overflow: visible;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .ir-legend {
+            display: flex;
+            justify-content: center;
+            gap: 26px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .ir-legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .ir-legend i {
+            width: 24px;
+            height: 3px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .ir-matrix-wrap {
+            overflow-x: auto;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        [data-theme="dark"] .ir-matrix-wrap {
+            background: var(--surface);
+        }
+
+        table.ir-matrix {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 580px;
+            font-size: 13px;
+        }
+
+        table.ir-matrix th,
+        table.ir-matrix td {
+            border: 1px solid var(--border);
+            padding: 10px 8px;
+            text-align: center;
+        }
+
+        table.ir-matrix thead th {
+            background: var(--surface-2);
+            font-weight: 700;
+            color: var(--text);
+            font-size: 12.5px;
+        }
+
+        table.ir-matrix tbody th {
+            background: var(--surface-2);
+            font-weight: 700;
+            text-align: left;
+            white-space: nowrap;
+            color: var(--text);
+        }
+
+        table.ir-matrix .cell {
+            display: inline-grid;
+            place-items: center;
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            font-weight: 800;
+            font-size: 11px;
+        }
+
+        table.ir-matrix .cell.S {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        table.ir-matrix .cell.M {
+            background: color-mix(in srgb, var(--gold) 28%, var(--bg));
+            color: var(--text);
+            border: 1px solid var(--gold);
+        }
+
+        table.ir-matrix .cell.L {
+            background: var(--surface-3);
+            color: var(--text-muted);
+        }
+
+        table.ir-matrix .cell.self {
+            color: var(--text-subtle);
+            background: transparent;
+        }
+
+        .ir-mlegend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .ir-mlegend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ir-mlegend .cell {
+            display: inline-grid;
+            place-items: center;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 10px;
+        }
+
+        @media (max-width:620px) {
+            .ir-toggle button {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+
+        /* ---------- ISO / COMPLIANCE ---------- */
+        .iso-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .iso-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 18px;
+            transition: transform 180ms, box-shadow 180ms, border-color 180ms;
+            display: flex;
+            flex-direction: column;
+        }
+
+        [data-theme="dark"] .iso-card {
+            background: var(--surface);
+        }
+
+        .iso-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+            border-color: var(--border-strong);
+        }
+
+        .iso-card.ai {
+            background: linear-gradient(150deg, var(--ink), var(--ink-2));
+            border-color: transparent;
+        }
+
+        .iso-card.ai h4 {
+            color: #fff;
+        }
+
+        .iso-card.ai .ic-cl {
+            color: var(--gold);
+        }
+
+        .iso-card.ai p {
+            color: rgba(255, 255, 255, 0.76);
+        }
+
+        .iso-card .ic-cl {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .iso-card h4 {
+            font-size: 15.5px;
+            font-weight: 700;
+            margin: 5px 0 7px;
+        }
+
+        .iso-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .iso-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .iso-chips span {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 999px;
+        }
+
+        .iso-chips span b {
+            color: var(--accent);
+        }
+
+        .iso-banner {
+            margin-top: 30px;
+            background: radial-gradient(600px 240px at 85% 0%, rgba(37, 99, 235, 0.22), transparent 60%), var(--ink);
+            color: #fff;
+            border-radius: 16px;
+            padding: 32px;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 26px;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .iso-banner h3 {
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 9px;
+        }
+
+        .iso-banner p {
+            font-size: 14.5px;
+            color: rgba(255, 255, 255, 0.74);
+        }
+
+        .iso-banner .ib-feats {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .iso-banner .ib-feats div {
+            display: flex;
+            gap: 11px;
+            align-items: flex-start;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .iso-banner .ib-feats .ck {
+            flex: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            background: rgba(125, 181, 255, 0.18);
+            color: #7db5ff;
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 12px;
+        }
+
+        @media (max-width:900px) {
+            .iso-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .iso-banner {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width:560px) {
+            .iso-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* print-only artifacts hidden on screen */
+        .cover-slide,
+        .onepager-sheet {
+            display: none;
+        }
+
+        /* ---------- A4 PITCH-DECK PRINT ---------- */
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+
+            @page portrait {
+                size: A4 portrait;
+                margin: 0;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+
+            body {
+                background: #fff;
+            }
+
+            /* hide interactive chrome */
+            header.nav,
+            .trust,
+            footer,
+            .toast,
+            .palette-wrap,
+            .theme-toggle,
+            #exportPdf,
+            .hero-cta,
+            .nav-cta,
+            .cta-band .hero-cta {
+                display: none !important;
+            }
+
+            /* every reveal element fully shown, no animation */
+            .reveal {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .flow-token,
+            .ai-chip,
+            .ai-chip .spark,
+            .node.active,
+            .showcase-media img,
+            .bars .bar {
+                animation: none !important;
+            }
+
+            .iso,
+            .iso-r {
+                transform: none !important;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            /* ===== PITCH DECK (landscape), default print mode ===== */
+            body:not(.onepager) .cover-slide {
+                display: flex !important;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                page-break-after: always;
+                break-after: page;
+                page-break-inside: avoid;
+                min-height: 186mm;
+                box-sizing: border-box;
+                padding: 22mm 24mm !important;
+                background:
+                    radial-gradient(700px 360px at 88% 0%, rgba(37, 99, 235, 0.30), transparent 60%),
+                    var(--ink);
+                color: #fff;
+            }
+
+            .cover-slide .c-brand {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-weight: 800;
+                font-size: 30px;
+                letter-spacing: -0.03em;
+            }
+
+            .cover-slide .c-brand .logo-mark {
+                width: 42px;
+                height: 42px;
+                border-radius: 11px;
+            }
+
+            .cover-slide .c-brand .logo-mark svg {
+                width: 26px;
+                height: 26px;
+            }
+
+            .cover-slide .c-brand .three {
+                color: var(--accent);
+            }
+
+            .cover-slide .c-kicker {
+                margin-top: 26mm;
+                font-size: 13px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #7db5ff;
+            }
+
+            .cover-slide .c-title {
+                font-size: 52px;
+                font-weight: 800;
+                line-height: 1.08;
+                margin: 10px 0 14px;
+                max-width: 220mm;
+            }
+
+            .cover-slide .c-title span {
+                color: var(--accent);
+            }
+
+            .cover-slide .c-sub {
+                font-size: 18px;
+                color: rgba(255, 255, 255, 0.72);
+                max-width: 170mm;
+            }
+
+            .cover-slide .c-foot {
+                margin-top: auto;
+                display: flex;
+                gap: 24px;
+                font-size: 12px;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                color: rgba(255, 255, 255, 0.5);
+            }
+
+            body:not(.onepager) .onepager-sheet {
+                display: none !important;
+            }
+
+            /* one section = one slide */
+            body:not(.onepager) .hero,
+            body:not(.onepager) section.sec,
+            body:not(.onepager) .lifecycle,
+            body:not(.onepager) .showcase {
+                page-break-after: always;
+                break-after: page;
+                page-break-inside: avoid;
+                min-height: 186mm;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 24mm 18mm 20mm !important;
+            }
+
+            /* subtle theme-matched background for light slides, no more plain white */
+            body:not(.onepager) .hero,
+            body:not(.onepager) section.sec:not(.lifecycle):not(.showcase) {
+                background:
+                    radial-gradient(640px 340px at 92% -10%, var(--accent-soft), transparent 60%),
+                    radial-gradient(520px 300px at 0% 110%, var(--accent-soft), transparent 62%),
+                    linear-gradient(180deg, #ffffff 0%, var(--surface-2) 100%) !important;
+            }
+
+            body:not(.onepager) .demo-slide {
+                page-break-after: auto !important;
+                break-after: auto !important;
+            }
+
+            /* show all platform capabilities, stacked */
+            .tabs,
+            .tc-label {
+                display: none !important;
+            }
+
+            body:not(.onepager) .panel {
+                display: block !important;
+                page-break-inside: avoid;
+                margin-bottom: 10mm;
+            }
+
+            .panel-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            .hero-grid,
+            .region-grid,
+            .showcase-grid {
+                grid-template-columns: 1fr 1fr !important;
+            }
+
+            .hero h1 {
+                font-size: 40px;
+            }
+
+            .sec-head {
+                margin-bottom: 8mm;
+            }
+
+            /* ===== repeating header + footer chrome on every deck slide ===== */
+            .print-hd,
+            .print-ft {
+                display: none;
+            }
+
+            body:not(.onepager) .print-hd,
+            body:not(.onepager) .print-ft {
+                display: flex !important;
+            }
+
+            body:not(.onepager) .print-hd {
+                position: absolute;
+                top: 10mm;
+                left: 18mm;
+                right: 18mm;
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 6px;
+                border-bottom: 1px solid var(--border);
+            }
+
+            body:not(.onepager) .print-hd .ph-brand {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                font-weight: 800;
+                font-size: 14px;
+                letter-spacing: -0.02em;
+                color: var(--ink);
+            }
+
+            body:not(.onepager) .print-hd .ph-brand .three {
+                color: var(--accent);
+            }
+
+            body:not(.onepager) .print-hd .ph-brand .lm {
+                width: 19px;
+                height: 19px;
+                border-radius: 5px;
+                background: linear-gradient(135deg, var(--accent), var(--ink));
+                display: grid;
+                place-items: center;
+            }
+
+            body:not(.onepager) .print-hd .ph-brand .lm svg {
+                width: 12px;
+                height: 12px;
+                color: #fff;
+            }
+
+            body:not(.onepager) .print-hd .ph-sec {
+                font-weight: 700;
+                color: var(--accent);
+                text-transform: uppercase;
+                letter-spacing: 0.09em;
+                font-size: 9.5px;
+            }
+
+            body:not(.onepager) .print-ft {
+                position: absolute;
+                bottom: 10mm;
+                left: 18mm;
+                right: 18mm;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 9px;
+                color: var(--text-subtle);
+                letter-spacing: 0.04em;
+                padding-top: 6px;
+                border-top: 1px solid var(--border);
+            }
+
+            body:not(.onepager) .print-ft .pf-pg {
+                font-weight: 700;
+                color: var(--text-muted);
+            }
+
+            /* dark slides, invert chrome colours for contrast */
+            body:not(.onepager) .lifecycle .print-hd,
+            body:not(.onepager) .showcase .print-hd {
+                border-color: rgba(255, 255, 255, 0.20);
+            }
+
+            body:not(.onepager) .lifecycle .print-hd .ph-brand,
+            body:not(.onepager) .showcase .print-hd .ph-brand {
+                color: #fff;
+            }
+
+            body:not(.onepager) .lifecycle .print-ft,
+            body:not(.onepager) .showcase .print-ft {
+                border-color: rgba(255, 255, 255, 0.20);
+                color: rgba(255, 255, 255, 0.55);
+            }
+
+            body:not(.onepager) .lifecycle .print-ft .pf-pg,
+            body:not(.onepager) .showcase .print-ft .pf-pg {
+                color: rgba(255, 255, 255, 0.85);
+            }
+
+            /* ===== 3-PAGE ONE-PAGER (portrait consulting handout) ===== */
+            body.onepager>*:not(.onepager-sheet) {
+                display: none !important;
+            }
+
+            body.onepager .onepager-sheet {
+                display: block !important;
+                page: portrait;
+                color: var(--text);
+            }
+
+            .onepager-sheet .op-page {
+                page-break-after: always;
+                break-after: page;
+                page-break-inside: avoid;
+                box-sizing: border-box;
+                min-height: 297mm;
+                width: 100%;
+                padding: 15mm 14mm 14mm !important;
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                background:
+                    radial-gradient(560px 320px at 100% 0%, var(--accent-soft), transparent 60%),
+                    radial-gradient(440px 280px at 0% 102%, var(--accent-soft), transparent 62%),
+                    linear-gradient(180deg, #fff 0%, var(--surface-2) 100%);
+            }
+
+            .onepager-sheet .op-page:last-child {
+                page-break-after: auto;
+                break-after: auto;
+            }
+
+            /* page header + footer chrome */
+            .onepager-sheet .oph {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-bottom: 2px solid var(--accent);
+                padding-bottom: 8px;
+                margin-bottom: 14px;
+            }
+
+            .onepager-sheet .oph .c-brand {
+                display: flex;
+                align-items: center;
+                gap: 9px;
+                font-weight: 800;
+                font-size: 21px;
+                letter-spacing: -0.03em;
+                color: var(--ink);
+            }
+
+            .onepager-sheet .oph .c-brand .logo-mark {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+            }
+
+            .onepager-sheet .oph .c-brand .logo-mark svg {
+                width: 18px;
+                height: 18px;
+            }
+
+            .onepager-sheet .oph .c-brand .three {
+                color: var(--accent);
+            }
+
+            .onepager-sheet .oph .op-tag {
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                color: var(--text-subtle);
+            }
+
+            .onepager-sheet .opf {
+                margin-top: auto;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                border-top: 1px solid var(--border);
+                padding-top: 8px;
+                font-size: 9px;
+                color: var(--text-subtle);
+                letter-spacing: 0.04em;
+            }
+
+            .onepager-sheet .opf .pg {
+                font-weight: 700;
+                color: var(--text-muted);
+            }
+
+            /* ---- PAGE 1: cover (dark) ---- */
+            .onepager-sheet .op-cover {
+                background:
+                    radial-gradient(620px 380px at 88% 0%, rgba(37, 99, 235, 0.34), transparent 60%),
+                    linear-gradient(160deg, var(--ink), var(--ink-2)) !important;
+                color: #fff;
+            }
+
+            .onepager-sheet .op-cover .oph {
+                border-bottom-color: rgba(255, 255, 255, 0.25);
+            }
+
+            .onepager-sheet .op-cover .oph .c-brand {
+                color: #fff;
+            }
+
+            .onepager-sheet .op-cover .oph .op-tag {
+                color: #7db5ff;
+            }
+
+            .onepager-sheet .op-cover .opf {
+                border-top-color: rgba(255, 255, 255, 0.18);
+                color: rgba(255, 255, 255, 0.55);
+            }
+
+            .onepager-sheet .op-cover .opf .pg {
+                color: rgba(255, 255, 255, 0.85);
+            }
+
+            .onepager-sheet .op-kicker {
+                margin-top: 18mm;
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #7db5ff;
+            }
+
+            .onepager-sheet .op-h1 {
+                font-size: 42px;
+                font-weight: 800;
+                line-height: 1.08;
+                margin: 10px 0 12px;
+            }
+
+            .onepager-sheet .op-h1 span {
+                color: var(--accent);
+            }
+
+            .onepager-sheet .op-sub {
+                font-size: 15px;
+                color: rgba(255, 255, 255, 0.74);
+                max-width: 150mm;
+                line-height: 1.55;
+            }
+
+            .onepager-sheet .op-pills {
+                display: flex;
+                gap: 9px;
+                flex-wrap: wrap;
+                margin-top: 18px;
+            }
+
+            .onepager-sheet .op-pills span {
+                font-size: 11.5px;
+                color: #eaf1f8;
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                padding: 7px 13px;
+                border-radius: 999px;
+            }
+
+            .onepager-sheet .op-hero-img {
+                margin-top: 13mm;
+            }
+
+            .onepager-sheet .op-hero-img img {
+                width: 100%;
+                height: auto;
+                border-radius: 12px;
+                filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.5));
+            }
+
+            /* ---- PAGE 2 + 3 shared headings ---- */
+            .onepager-sheet .op-title {
+                font-size: 24px;
+                font-weight: 800;
+                color: var(--ink);
+                letter-spacing: -0.02em;
+                margin-bottom: 5px;
+            }
+
+            .onepager-sheet .op-intro {
+                font-size: 12.5px;
+                color: var(--text-muted);
+                line-height: 1.5;
+                margin-bottom: 15px;
+                max-width: 165mm;
+            }
+
+            .onepager-sheet .op-sech {
+                font-size: 13px;
+                font-weight: 700;
+                color: var(--ink);
+                margin: 16px 0 9px;
+                padding-left: 9px;
+                border-left: 3px solid var(--accent);
+            }
+
+            /* ---- PAGE 2: capability cards + flow ---- */
+            .onepager-sheet .op-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 10px;
+            }
+
+            .onepager-sheet .op-cap {
+                border: 1px solid var(--border);
+                border-radius: 11px;
+                padding: 13px;
+                background: #fff;
+                box-shadow: 0 1px 2px rgba(11, 31, 58, 0.05);
+            }
+
+            .onepager-sheet .op-cap .ci {
+                width: 30px;
+                height: 30px;
+                border-radius: 8px;
+                background: var(--accent-soft);
+                color: var(--accent);
+                display: grid;
+                place-items: center;
+                font-weight: 800;
+                font-size: 13px;
+                margin-bottom: 9px;
+            }
+
+            .onepager-sheet .op-cap b {
+                display: block;
+                font-size: 13px;
+                color: var(--ink);
+                margin-bottom: 3px;
+            }
+
+            .onepager-sheet .op-cap span {
+                font-size: 11px;
+                color: var(--text-muted);
+                line-height: 1.45;
+            }
+
+            .onepager-sheet .op-flow {
+                display: flex;
+                align-items: stretch;
+                gap: 6px;
+            }
+
+            .onepager-sheet .op-flow .fn {
+                flex: 1;
+                text-align: center;
+                background: #fff;
+                border: 1px solid var(--border);
+                border-radius: 9px;
+                padding: 11px 6px;
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--ink);
+            }
+
+            .onepager-sheet .op-flow .fn .st {
+                display: block;
+                font-size: 9px;
+                color: var(--accent);
+                font-weight: 700;
+                letter-spacing: 0.06em;
+                margin-bottom: 3px;
+            }
+
+            .onepager-sheet .op-flow .fa {
+                align-self: center;
+                color: var(--text-subtle);
+                font-weight: 700;
+            }
+
+            /* ---- PAGE 3: why + metrics + GCC + CTA ---- */
+            .onepager-sheet .op-why {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 9px;
+            }
+
+            .onepager-sheet .op-why .w {
+                display: flex;
+                gap: 10px;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 11px 12px;
+                background: #fff;
+            }
+
+            .onepager-sheet .op-why .w .wi {
+                width: 28px;
+                height: 28px;
+                border-radius: 7px;
+                background: var(--accent-soft);
+                color: var(--accent);
+                display: grid;
+                place-items: center;
+                flex: none;
+                font-weight: 800;
+                font-size: 12px;
+            }
+
+            .onepager-sheet .op-why .w b {
+                display: block;
+                font-size: 12px;
+                color: var(--ink);
+                margin-bottom: 2px;
+            }
+
+            .onepager-sheet .op-why .w span {
+                font-size: 10.5px;
+                color: var(--text-muted);
+                line-height: 1.45;
+            }
+
+            .onepager-sheet .op-metrics {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+                margin: 14px 0;
+            }
+
+            .onepager-sheet .op-metrics .m {
+                text-align: center;
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 13px;
+                background: #fff;
+            }
+
+            .onepager-sheet .op-metrics .m .mn {
+                font-size: 23px;
+                font-weight: 800;
+                color: var(--accent);
+                letter-spacing: -0.02em;
+            }
+
+            .onepager-sheet .op-metrics .m .ml {
+                font-size: 10.5px;
+                color: var(--text-muted);
+                margin-top: 3px;
+            }
+
+            .onepager-sheet .op-gcc {
+                display: grid;
+                grid-template-columns: 1.25fr 1fr;
+                gap: 12px;
+                align-items: stretch;
+            }
+
+            .onepager-sheet .op-rtl {
+                background: linear-gradient(150deg, var(--ink), var(--ink-2));
+                color: #fff;
+                border-radius: 13px;
+                padding: 18px;
+            }
+
+            .onepager-sheet .op-rtl .rt {
+                font-size: 11px;
+                color: var(--gold);
+                font-weight: 700;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+            }
+
+            .onepager-sheet .op-rtl .ar {
+                direction: rtl;
+                text-align: right;
+                font-size: 22px;
+                font-weight: 800;
+                margin: 10px 0 3px;
+            }
+
+            .onepager-sheet .op-rtl .en {
+                color: rgba(255, 255, 255, 0.6);
+                font-size: 11.5px;
+            }
+
+            .onepager-sheet .op-gcc .gl {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .onepager-sheet .op-gcc .gl .g {
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 10px 11px;
+                background: #fff;
+            }
+
+            .onepager-sheet .op-gcc .gl .g b {
+                font-size: 11.5px;
+                color: var(--ink);
+                display: block;
+                margin-bottom: 2px;
+            }
+
+            .onepager-sheet .op-gcc .gl .g span {
+                font-size: 10px;
+                color: var(--text-muted);
+                line-height: 1.4;
+            }
+
+            .onepager-sheet .op-cta2 {
+                margin-top: 14px;
+                background: radial-gradient(500px 200px at 80% 0%, rgba(37, 99, 235, 0.30), transparent 60%), var(--ink);
+                color: #fff;
+                border-radius: 13px;
+                padding: 18px 20px;
+                text-align: center;
+            }
+
+            .onepager-sheet .op-cta2 b {
+                font-size: 16px;
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .onepager-sheet .op-cta2 span {
+                font-size: 11.5px;
+                color: rgba(255, 255, 255, 0.72);
+            }
+        }
+
+        /* ---------- CROSS-FUNCTIONAL FLOW DIAGRAM ---------- */
+        .fx-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            overflow: visible;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .fx-col-head {
+            font: 700 13px 'Inter', sans-serif;
+            letter-spacing: 0.02em;
+        }
+
+        .fx-head-in {
+            fill: var(--accent);
+        }
+
+        .fx-head-out {
+            fill: var(--success);
+        }
+
+        .fx-head-focus {
+            fill: var(--text-muted);
+        }
+
+        .fx-link {
+            fill: none;
+            stroke-width: 2.4;
+            opacity: 0.32;
+        }
+
+        .fx-link.in {
+            stroke: var(--accent);
+        }
+
+        .fx-link.out {
+            stroke: var(--success);
+        }
+
+        .fx-flow {
+            fill: none;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 9 17;
+            filter: drop-shadow(0 0 2.5px currentColor);
+            animation: fxflow 0.85s linear infinite;
+        }
+
+        .fx-flow.in {
+            stroke: var(--accent);
+            color: var(--accent);
+        }
+
+        .fx-flow.out {
+            stroke: var(--success);
+            color: var(--success);
+        }
+
+        @keyframes fxflow {
+            to {
+                stroke-dashoffset: -26;
+            }
+        }
+
+        .fx-focus {
+            fill: #f97316;
+        }
+
+        .fx-focus-ring {
+            fill: none;
+            stroke: #f97316;
+            stroke-width: 2;
+            opacity: 0.3;
+        }
+
+        .fx-focus-t {
+            fill: #fff;
+            font: 800 28px 'Inter', sans-serif;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        .fx-focus-name {
+            fill: var(--text);
+            font: 800 16px 'Inter', sans-serif;
+            text-anchor: middle;
+        }
+
+        .fx-focus-sub {
+            fill: var(--text-muted);
+            font: 500 12px 'Inter', sans-serif;
+            text-anchor: middle;
+        }
+
+        .fx-node.in circle {
+            fill: var(--accent);
+        }
+
+        .fx-node.out circle {
+            fill: var(--success);
+        }
+
+        .fx-node text {
+            fill: #fff;
+            font: 800 12px 'Inter', sans-serif;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        .fx-name {
+            fill: var(--text);
+            font: 700 13px 'Inter', sans-serif;
+        }
+
+        .fx-sub {
+            fill: var(--text-subtle);
+            font: 500 11.5px 'Inter', sans-serif;
+        }
+
+        .fx-badge rect {
+            fill: var(--surface);
+            stroke: var(--border-strong);
+            stroke-width: 1.2;
+        }
+
+        .fx-badge text {
+            fill: var(--text-muted);
+            font: 800 11px 'Inter', sans-serif;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        .fx-note {
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--text-subtle);
+            margin-top: 16px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fx-flow {
+                animation: none;
+                opacity: 0.55;
+            }
+        }
+
+        /* ---------- PROCESS VALUE CHAINS ---------- */
+        .vc-scroll {
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+
+        .vc-board {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            min-width: 920px;
+        }
+
+        .vc-band-label {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+            margin-bottom: 9px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .vc-band-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .vc-row {
+            display: grid;
+            gap: 13px;
+        }
+
+        .vc-row.op {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .vc-row.sup {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .vc-col {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+
+        .vc-l1 {
+            border-radius: 10px 10px 4px 4px;
+            padding: 12px 13px;
+            color: #fff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .vc-l1 .code {
+            font-size: 11px;
+            font-weight: 800;
+            opacity: 0.82;
+            letter-spacing: 0.04em;
+        }
+
+        .vc-l1 .name {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.22;
+            margin-top: 2px;
+        }
+
+        /* operating row reads as a Porter-style value-chain arrow ribbon */
+        .vc-row.op .vc-l1 {
+            position: relative;
+            overflow: hidden;
+            border-radius: 6px 4px 4px 6px;
+            padding-left: 22px;
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%, 14px 50%);
+        }
+
+        .vc-row.op .vc-col:first-child .vc-l1 {
+            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 50%, calc(100% - 15px) 100%, 0 100%);
+            padding-left: 13px;
+        }
+
+        .vc-row.op .vc-l1::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 46px;
+            left: -70px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+            transform: skewX(-18deg);
+            animation: vcSheen 3.4s ease-in-out infinite;
+        }
+
+        .vc-row.op .vc-col:nth-child(2) .vc-l1::after {
+            animation-delay: 0.35s;
+        }
+
+        .vc-row.op .vc-col:nth-child(3) .vc-l1::after {
+            animation-delay: 0.7s;
+        }
+
+        .vc-row.op .vc-col:nth-child(4) .vc-l1::after {
+            animation-delay: 1.05s;
+        }
+
+        .vc-row.op .vc-col:nth-child(5) .vc-l1::after {
+            animation-delay: 1.4s;
+        }
+
+        @keyframes vcSheen {
+            0% {
+                left: -70px;
+            }
+
+            55%,
+            100% {
+                left: 120%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .vc-row.op .vc-l1::after {
+                animation: none;
+                display: none;
+            }
+        }
+
+        .vc-l2 {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 11px 12px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 160ms, box-shadow 160ms;
+        }
+
+        .vc-l2:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        [data-theme="dark"] .vc-l2 {
+            background: var(--surface);
+        }
+
+        .vc-l2 .l2c {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 0.03em;
+        }
+
+        .vc-l2 .l2t {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text);
+            margin-top: 1px;
+            line-height: 1.3;
+        }
+
+        .vc-l3wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 9px;
+        }
+
+        .vc-l3 {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 3px 7px;
+        }
+
+        .vc-legend {
+            display: flex;
+            justify-content: center;
+            gap: 22px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .vc-legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .vc-legend i {
+            width: 22px;
+            height: 11px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .vc-note {
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--text-subtle);
+            margin-top: 14px;
+            max-width: 680px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ---------- MODELING NOTATIONS ---------- */
+        .nota-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .nota-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            transition: all 180ms;
+        }
+
+        [data-theme="dark"] .nota-card {
+            background: var(--surface);
+        }
+
+        .nota-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+            border-color: var(--border-strong);
+        }
+
+        .nota-vis {
+            height: 66px;
+            border-radius: 10px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            margin-bottom: 15px;
+        }
+
+        .nota-vis svg {
+            display: block;
+        }
+
+        .nota-card .tag {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .nota-card h3 {
+            font-size: 17px;
+            margin: 3px 0 6px;
+        }
+
+        .nota-card p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .nv-box {
+            fill: var(--ink);
+        }
+
+        .nv-acc {
+            fill: var(--accent);
+        }
+
+        .nv-stroke {
+            fill: none;
+            stroke: var(--border-strong);
+            stroke-width: 2;
+        }
+
+        .nv-t {
+            fill: var(--text-muted);
+            font: 700 9px 'Inter', sans-serif;
+            text-anchor: middle;
+            dominant-baseline: central;
+        }
+
+        @media(max-width:780px) {
+            .nota-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- PROCESS GOVERNANCE ---------- */
+        .gov-role {
+            margin-left: auto;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--accent-soft);
+            border-radius: 999px;
+            padding: 3px 10px;
+            white-space: nowrap;
+        }
+
+        .sub-cta {
+            background: radial-gradient(700px 360px at 80% 0%, rgba(37, 99, 235, 0.30), transparent 60%), var(--ink);
+            color: #fff;
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .sub-cta h2 {
+            font-size: 30px;
+            color: #fff;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .sub-cta p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.72);
+            margin: 16px auto 26px;
+            max-width: 480px;
+        }
+
+        .foot-slim {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 14px;
+        }
+
+        .foot-slim .brand {
+            justify-content: center;
+        }
+
+        .foot-slim .fs-tag {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin: 0;
+        }
+
+        .foot-slim .fs-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px 18px;
+            width: 100%;
+            margin-top: 6px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-subtle);
+        }
+
+        .foot-slim .fs-bottom a {
+            color: var(--text-subtle);
+        }
+
+        .foot-slim .fs-bottom a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width:560px) {
+            .foot-slim .fs-bottom {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAV -->
+    <header class="nav">
+        <div class="wrap nav-inner">
+            <div class="brand">
+                <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="6" cy="6.5" r="2.3" fill="currentColor" stroke="none"></circle>
+                        <circle cx="18" cy="6.5" r="2.3" fill="currentColor" stroke="none"></circle>
+                        <circle cx="12" cy="17.5" r="2.3" fill="currentColor" stroke="none"></circle>
+                        <path d="M8.1 7.8 10.6 15.4M15.9 7.8 13.4 15.4M8.3 6.5h7.4"></path>
+                    </svg></span>
+                Tasree
+            </div>
+            <nav class="nav-links">
+                <a href="index.html#platform">Platform</a>
+                <a href="index.html#modules">Modules</a>
+                <a href="index.html#security">Security</a>
+                <a href="index.html#why">Why Tasree</a>
+            </nav>
+            <div class="nav-cta">
+                <div class="palette-wrap">
+                    <button class="theme-toggle" id="paletteBtn" aria-label="Change accent color" title="Accent color">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="13.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"></circle>
+                            <circle cx="17.5" cy="10.5" r="1.5" fill="currentColor" stroke="none"></circle>
+                            <circle cx="8.5" cy="7.5" r="1.5" fill="currentColor" stroke="none"></circle>
+                            <circle cx="6.5" cy="12.5" r="1.5" fill="currentColor" stroke="none"></circle>
+                            <path
+                                d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.6-.2-1-.6-1.4-.4-.4-.6-.9-.6-1.4 0-1.1.9-2 2-2h1.8c2.4 0 4-1.6 4-4 0-4.4-4-8-8.6-8z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="palette-pop" id="palettePop">
+                        <div class="ttl">Accent color</div>
+                        <div class="swatches">
+                            <button class="sw" data-pal="Blue" style="background:#2563eb" title="Blue"></button>
+                            <button class="sw" data-pal="Emerald" style="background:#059669" title="Emerald"></button>
+                            <button class="sw" data-pal="Violet" style="background:#7c3aed" title="Violet"></button>
+                            <button class="sw" data-pal="Teal" style="background:#0891b2" title="Teal"></button>
+                            <button class="sw" data-pal="Amber" style="background:#ea7a0c" title="Amber"></button>
+                        </div>
+                        <label class="custom">Custom color <input type="color" id="customColor" value="#2563eb"></label>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme">
+                    <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <circle cx="12" cy="12" r="4"></circle>
+                        <path
+                            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41">
+                        </path>
+                    </svg>
+                    <svg class="moon" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <div class="palette-wrap export-wrap">
+                    <button class="theme-toggle" id="exportPdf" aria-label="Export to PDF (A4)"
+                        title="Export to PDF (A4)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3v12M8 11l4 4 4-4M5 21h14"></path>
+                        </svg>
+                    </button>
+                    <div class="palette-pop export-pop" id="exportPop">
+                        <div class="ttl">Export as PDF</div>
+                        <button class="export-opt" id="exportDeck">
+                            <span class="eo-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2.5" y="5" width="19" height="12" rx="1.5"></rect>
+                                    <path d="M8 21h8M12 17v4"></path>
+                                </svg></span>
+                            <span class="eo-txt"><b>Pitch deck</b><small>A4 landscape · one section per
+                                    slide</small></span>
+                        </button>
+                        <button class="export-opt" id="exportOnepager">
+                            <span class="eo-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="5" y="2.5" width="14" height="19" rx="1.5"></rect>
+                                    <path d="M8.5 7h7M8.5 11h7M8.5 15h4"></path>
+                                </svg></span>
+                            <span class="eo-txt"><b>One-pager</b><small>A4 portrait · condensed handout</small></span>
+                        </button>
+                    </div>
+                </div>
+                <a class="btn btn-ghost" href="index.html#demo" onclick="toast('Sign-in is a prototype link')">Sign
+                    in</a>
+                <a class="btn btn-primary" href="index.html#demo" onclick="toast('Demo request captured')">Book a
+                    demo</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+                    <svg class="bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M3 6h18M3 12h18M3 18h18"></path>
+                    </svg>
+                    <svg class="x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round">
+                        <path d="M6 6l12 12M18 6 6 18"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+    <!-- MOBILE MENU -->
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a class="mm-link" href="index.html#platform">Platform</a>
+        <a class="mm-link" href="index.html#modules">Modules</a>
+        <a class="mm-link" href="index.html#security">Security</a>
+        <a class="mm-link" href="index.html#why">Why Tasree</a>
+        <div class="mm-actions">
+            <a class="btn btn-ghost" href="index.html#demo" onclick="toast('Sign-in is a prototype link')">Sign in</a>
+            <a class="btn btn-primary" href="index.html#demo" onclick="toast('Demo request captured')">Book a demo</a>
+        </div>
+    </nav>
+    <!-- PAGE HERO -->
+    <section class="hero" style="padding:62px 0 26px;">
+        <div class="wrap">
+            <span class="badge-pill">● Module 01 · Process Management</span>
+            <h1 style="font-size:42px;">Model, benchmark and govern <span class="hl">every process</span>.</h1>
+            <p class="lead">The Process Management module structures your processes to a global standard, maps how they
+                interconnect, and keeps them compliant and secure, end to end.</p>
+        </div>
+    </section>
+    <!-- MODELING NOTATIONS -->
+    <section class="sec" id="notation" style="background:var(--surface-2);">
+        <div class="wrap">
+            <div class="sec-head">
+                <span class="eyebrow">Modeling notations</span>
+                <h2>Model in the notation that fits the audience</h2>
+                <p>One governed repository, three industry-standard notations, from the boardroom value chain down to
+                    executable BPMN, every model stays linked.</p>
+            </div>
+            <div class="nota-grid reveal in">
+                <div class="nota-card">
+                    <div class="nota-vis">
+                        <svg width="162" height="40" viewBox="0 0 162 40" aria-hidden="true">
+                            <polygon class="nv-acc" points="2,6 40,6 50,20 40,34 2,34 12,20"></polygon>
+                            <polygon class="nv-box" points="54,6 92,6 102,20 92,34 54,34 64,20"></polygon>
+                            <polygon class="nv-acc" points="106,6 144,6 154,20 144,34 106,34 116,20"></polygon>
+                        </svg>
+                    </div>
+                    <div class="tag">Strategic</div>
+                    <h3>Value Chains</h3>
+                    <p>A high-level, left-to-right view of how value is created across the enterprise, ideal for
+                        executives and process landscapes.</p>
+                </div>
+                <div class="nota-card">
+                    <div class="nota-vis">
+                        <svg width="170" height="40" viewBox="0 0 170 40" aria-hidden="true">
+                            <polygon class="nv-acc" points="6,20 16,8 40,8 50,20 40,32 16,32"></polygon>
+                            <line class="nv-stroke" x1="50" y1="20" x2="64" y2="20"></line>
+                            <rect class="nv-box" x="64" y="8" width="42" height="24" rx="6"></rect>
+                            <line class="nv-stroke" x1="106" y1="20" x2="120" y2="20"></line>
+                            <polygon class="nv-acc" points="120,20 130,8 154,8 164,20 154,32 130,32"></polygon>
+                        </svg>
+                    </div>
+                    <div class="tag">Detailed</div>
+                    <h3>EPC</h3>
+                    <p>Event-driven Process Chains alternate events and functions, the trusted notation for detailed,
+                        SAP-style process documentation.</p>
+                </div>
+                <div class="nota-card">
+                    <div class="nota-vis">
+                        <svg width="170" height="40" viewBox="0 0 170 40" aria-hidden="true">
+                            <rect class="nv-box" x="4" y="9" width="40" height="22" rx="6"></rect>
+                            <line class="nv-stroke" x1="44" y1="20" x2="64" y2="20"></line>
+                            <polygon class="nv-acc" points="80,6 96,20 80,34 64,20"></polygon>
+                            <line class="nv-stroke" x1="96" y1="20" x2="116" y2="20"></line>
+                            <rect class="nv-box" x="116" y="9" width="46" height="22" rx="6"></rect>
+                        </svg>
+                    </div>
+                    <div class="tag">Executable</div>
+                    <h3>BPMN 2.0</h3>
+                    <p>The global standard for precise, executable process models, swimlanes, gateways and tasks that
+                        map straight to automation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- PROCESS VALUE CHAINS -->
+    <section class="sec" id="valuechain">
+        <div class="wrap">
+            <div class="sec-head">
+                <span class="eyebrow">Process value chains</span>
+                <h2>Your end-to-end process value chain</h2>
+                <p>See the whole enterprise on one board, operating processes run left to right, management and support
+                    sit beneath, and every L1 category decomposes into its L2 process groups and L3 processes.</p>
+            </div>
+            <div class="vc-scroll reveal">
+                <div class="vc-board">
+                    <div>
+                        <div class="vc-band-label">Operating processes · value flows downstream →</div>
+                        <div class="vc-row op">
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:var(--ink);">
+                                    <div class="code">1.0</div>
+                                    <div class="name">Develop Vision &amp; Strategy</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">1.1</div>
+                                    <div class="l2t">Define the business concept</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">1.1.1 Assess environment</span><span
+                                            class="vc-l3">1.1.2 Survey market</span></div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">1.2</div>
+                                    <div class="l2t">Manage strategic initiatives</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">1.2.1 Set targets</span><span
+                                            class="vc-l3">1.2.2 Build roadmap</span></div>
+                                </div>
+                            </div>
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:var(--accent);">
+                                    <div class="code">2.0</div>
+                                    <div class="name">Develop Products &amp; Services</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">2.1</div>
+                                    <div class="l2t">Manage product portfolio</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">2.1.1 Plan portfolio</span><span
+                                            class="vc-l3">2.1.2 Evaluate concepts</span></div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">2.2</div>
+                                    <div class="l2t">Design &amp; develop offerings</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">2.2.1 Design</span><span
+                                            class="vc-l3">2.2.2 Test &amp; pilot</span></div>
+                                </div>
+                            </div>
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:var(--accent-hover);">
+                                    <div class="code">3.0</div>
+                                    <div class="name">Market &amp; Sell</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">3.1</div>
+                                    <div class="l2t">Understand markets &amp; customers</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">3.1.1 Segment</span><span
+                                            class="vc-l3">3.1.2 Analyze needs</span></div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">3.2</div>
+                                    <div class="l2t">Develop &amp; manage sales</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">3.2.1 Generate leads</span><span
+                                            class="vc-l3">3.2.2 Close orders</span></div>
+                                </div>
+                            </div>
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:#1e3a8a;">
+                                    <div class="code">4.0</div>
+                                    <div class="name">Deliver &amp; Operate</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">4.1</div>
+                                    <div class="l2t">Plan &amp; procure resources</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">4.1.1 Plan supply</span><span
+                                            class="vc-l3">4.1.2 Source materials</span></div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">4.2</div>
+                                    <div class="l2t">Deliver products &amp; services</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">4.2.1 Schedule</span><span
+                                            class="vc-l3">4.2.2 Fulfil &amp; ship</span></div>
+                                </div>
+                            </div>
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:#2563eb;">
+                                    <div class="code">5.0</div>
+                                    <div class="name">Manage Customer Service</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">5.1</div>
+                                    <div class="l2t">Manage customer requests</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">5.1.1 Receive</span><span
+                                            class="vc-l3">5.1.2 Resolve</span></div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">5.2</div>
+                                    <div class="l2t">Measure satisfaction</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">5.2.1 Survey</span><span
+                                            class="vc-l3">5.2.2 Act on feedback</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="vc-band-label">Management &amp; support</div>
+                        <div class="vc-row sup">
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:var(--text-muted);">
+                                    <div class="code">6.0</div>
+                                    <div class="name">Human Capital</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">6.1</div>
+                                    <div class="l2t">Recruit &amp; develop people</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">6.1.1 Hire</span><span
+                                            class="vc-l3">6.1.2 Train</span></div>
+                                </div>
+                            </div>
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:var(--text-muted);">
+                                    <div class="code">7.0</div>
+                                    <div class="name">Information Technology</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">7.1</div>
+                                    <div class="l2t">Manage IT &amp; data</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">7.1.1 Operate</span><span
+                                            class="vc-l3">7.1.2 Secure</span></div>
+                                </div>
+                            </div>
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:var(--text-muted);">
+                                    <div class="code">8.0</div>
+                                    <div class="name">Financial Resources</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">8.1</div>
+                                    <div class="l2t">Manage finance</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">8.1.1 Budget</span><span
+                                            class="vc-l3">8.1.2 Report</span></div>
+                                </div>
+                            </div>
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:var(--text-muted);">
+                                    <div class="code">9.0</div>
+                                    <div class="name">Risk &amp; Compliance</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">9.1</div>
+                                    <div class="l2t">Manage risk &amp; controls</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">9.1.1 Assess</span><span
+                                            class="vc-l3">9.1.2 Audit</span></div>
+                                </div>
+                            </div>
+                            <div class="vc-col">
+                                <div class="vc-l1" style="background:var(--text-muted);">
+                                    <div class="code">10.0</div>
+                                    <div class="name">Procurement &amp; Assets</div>
+                                </div>
+                                <div class="vc-l2">
+                                    <div class="l2c">10.1</div>
+                                    <div class="l2t">Manage assets</div>
+                                    <div class="vc-l3wrap"><span class="vc-l3">10.1.1 Acquire</span><span
+                                            class="vc-l3">10.1.2 Maintain</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vc-legend">
+                <span><i style="background:var(--accent);"></i> Operating processes</span>
+                <span><i style="background:var(--text-muted);"></i> Management &amp; support</span>
+                <span><i style="background:var(--surface-3);border:1px solid var(--border);"></i> L3 process</span>
+            </div>
+            <p class="vc-note">Illustrative structure using APQC Process Classification Framework numbering. Your own
+                taxonomy maps the same way.</p>
+        </div>
+    </section>
+    <!-- PROCESS BENCHMARKING -->
+    <section class="sec" id="benchmark" style="background:var(--surface-2);">
+        <div class="wrap">
+            <div class="sec-head">
+                <span class="eyebrow">Process Benchmarking</span>
+                <h2>Drill any process to L4, and benchmark it</h2>
+                <p>Take a single thread out of the value chain and decompose it all the way to the executable activity,
+                    every level traces cleanly back to its value category and benchmarks against the APQC global
+                    standard.</p>
+            </div>
+            <div class="apqc-cascade reveal">
+                <div class="apqc-row">
+                    <div class="apqc-rail">
+                        <div class="apqc-badge" style="background:var(--ink);">L1<span class="bx">Category</span></div>
+                        <div class="apqc-conn"></div>
+                    </div>
+                    <div class="apqc-card" style="border-left-color:var(--ink);">
+                        <div class="ac-code">PCF 4.0</div>
+                        <div class="ac-title">Procure Products and Services</div>
+                        <div class="ac-desc">The top-level value category that frames every sourcing and purchasing
+                            activity across the organization.</div>
+                        <span class="ac-meta">Decomposes into process groups</span>
+                    </div>
+                </div>
+                <div class="apqc-row">
+                    <div class="apqc-rail">
+                        <div class="apqc-badge" style="background:var(--accent);">L2<span class="bx">Process
+                                Group</span></div>
+                        <div class="apqc-conn"></div>
+                    </div>
+                    <div class="apqc-card" style="border-left-color:var(--accent);">
+                        <div class="ac-code">PCF 4.2</div>
+                        <div class="ac-title">Procure materials and services</div>
+                        <div class="ac-desc">A coherent group of processes that turns an approved need into a fulfilled,
+                            paid order.</div>
+                        <span class="ac-meta">Contains end-to-end processes</span>
+                    </div>
+                </div>
+                <div class="apqc-row">
+                    <div class="apqc-rail">
+                        <div class="apqc-badge" style="background:var(--accent-hover);">L3<span
+                                class="bx">Process</span></div>
+                        <div class="apqc-conn"></div>
+                    </div>
+                    <div class="apqc-card" style="border-left-color:var(--accent-hover);">
+                        <div class="ac-code">PCF 4.2.3</div>
+                        <div class="ac-title">Order materials and services</div>
+                        <div class="ac-desc">The specific, modellable process that creates and issues a purchase order
+                            against an approved request.</div>
+                        <span class="ac-meta">Modelled in BPMN / EPC</span>
+                    </div>
+                </div>
+                <div class="apqc-row">
+                    <div class="apqc-rail">
+                        <div class="apqc-badge" style="background:var(--gold);">L4<span class="bx">Activity</span></div>
+                    </div>
+                    <div class="apqc-card" style="border-left-color:var(--gold);">
+                        <div class="ac-code">PCF 4.2.3.2</div>
+                        <div class="ac-title">Approve purchase requisition</div>
+                        <div class="ac-desc">A single executable activity, with its owner, control and endorsement built
+                            in and fully traceable.</div>
+                        <span class="ac-meta">Where work actually happens</span>
+                    </div>
+                </div>
+            </div>
+            <p class="apqc-note">Sample cascade shown for illustration, using the public APQC Process Classification
+                Framework numbering. Your own taxonomy maps the same way.</p>
+        </div>
+    </section>
+
+    <!-- CROSS-FUNCTIONAL PROCESS INTER-RELATIONSHIPS -->
+    <section class="sec" id="interrelate">
+        <div class="wrap">
+            <div class="sec-head">
+                <span class="eyebrow">Cross-functional clarity</span>
+                <h2>Cross-functional Process Inter-relationships</h2>
+                <p>No process runs alone. Tasree shows how every function feeds into and flows out of your core
+                    processes, see it as a cross-functional flow, or drill into a structured dependency matrix.</p>
+            </div>
+            <div style="text-align:center;">
+                <div class="ir-toggle">
+                    <button class="active" data-view="map">Flow view</button>
+                    <button data-view="matrix">Matrix view</button>
+                </div>
+            </div>
+            <div class="ir-views reveal">
+                <div class="ir-map-wrap" id="irMap">
+                    <svg class="fx-svg" viewBox="0 0 760 470" role="img"
+                        aria-label="Cross-functional process flow: incoming feeds, focus function, outgoing flows">
+                        <defs>
+                            <marker id="fxArrowIn" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto"
+                                markerUnits="userSpaceOnUse">
+                                <path d="M0,0 L8,4 L0,8 Z" fill="var(--accent)"></path>
+                            </marker>
+                            <marker id="fxArrowOut" markerWidth="11" markerHeight="11" refX="7.5" refY="4" orient="auto"
+                                markerUnits="userSpaceOnUse">
+                                <path d="M0,0 L8,4 L0,8 Z" fill="var(--success)"></path>
+                            </marker>
+                        </defs>
+                        <text class="fx-col-head fx-head-in" x="40" y="34" text-anchor="start">Incoming · feeds
+                            in</text>
+                        <text class="fx-col-head fx-head-focus" x="380" y="34" text-anchor="middle">Focus
+                            function</text>
+                        <text class="fx-col-head fx-head-out" x="720" y="34" text-anchor="end">Outgoing · flows
+                            to</text>
+                        <path class="fx-link in" d="M 179 150 C 270 158 270 222 322 232" marker-end="url(#fxArrowIn)">
+                        </path>
+                        <path class="fx-link in" d="M 179 320 C 270 312 270 258 322 248" marker-end="url(#fxArrowIn)">
+                        </path>
+                        <path class="fx-flow in" d="M 179 150 C 270 158 270 222 322 232"></path>
+                        <path class="fx-flow in" d="M 179 320 C 270 312 270 258 322 248"></path>
+                        <path class="fx-link out" d="M 438 232 C 512 222 528 110 581 102" marker-end="url(#fxArrowOut)">
+                        </path>
+                        <path class="fx-link out" d="M 438 240 C 512 240 540 240 581 240" marker-end="url(#fxArrowOut)">
+                        </path>
+                        <path class="fx-link out" d="M 438 248 C 512 258 528 370 581 378" marker-end="url(#fxArrowOut)">
+                        </path>
+                        <path class="fx-flow out" d="M 438 232 C 512 222 528 110 581 102"></path>
+                        <path class="fx-flow out" d="M 438 240 C 512 240 540 240 581 240"></path>
+                        <path class="fx-flow out" d="M 438 248 C 512 258 528 370 581 378"></path>
+                        <g class="fx-badge">
+                            <rect x="237" y="179" width="26" height="22" rx="7"></rect><text x="250" y="190">3</text>
+                        </g>
+                        <g class="fx-badge">
+                            <rect x="237" y="269" width="26" height="22" rx="7"></rect><text x="250" y="280">2</text>
+                        </g>
+                        <g class="fx-badge">
+                            <rect x="499" y="151" width="26" height="22" rx="7"></rect><text x="512" y="162">1</text>
+                        </g>
+                        <g class="fx-badge">
+                            <rect x="499" y="229" width="26" height="22" rx="7"></rect><text x="512" y="240">2</text>
+                        </g>
+                        <g class="fx-badge">
+                            <rect x="499" y="307" width="26" height="22" rx="7"></rect><text x="512" y="318">1</text>
+                        </g>
+                        <circle class="fx-focus-ring" cx="380" cy="240" r="62"></circle>
+                        <circle class="fx-focus" cx="380" cy="240" r="52"></circle>
+                        <text class="fx-focus-t" x="380" y="240">18</text>
+                        <text class="fx-focus-name" x="380" y="320">Procurement</text>
+                        <text class="fx-focus-sub" x="380" y="340">18 processes · 9 internal</text>
+                        <g class="fx-node in">
+                            <circle cx="160" cy="150" r="19"></circle><text x="160" y="150">12</text>
+                        </g>
+                        <g class="fx-node in">
+                            <circle cx="160" cy="320" r="19"></circle><text x="160" y="320">6</text>
+                        </g>
+                        <g class="fx-node out">
+                            <circle cx="600" cy="102" r="19"></circle><text x="600" y="102">8</text>
+                        </g>
+                        <g class="fx-node out">
+                            <circle cx="600" cy="240" r="19"></circle><text x="600" y="240">14</text>
+                        </g>
+                        <g class="fx-node out">
+                            <circle cx="600" cy="378" r="19"></circle><text x="600" y="378">9</text>
+                        </g>
+                        <text class="fx-name" x="133" y="146" text-anchor="end">Finance</text>
+                        <text class="fx-sub" x="133" y="161" text-anchor="end">12 processes</text>
+                        <text class="fx-name" x="133" y="316" text-anchor="end">Legal</text>
+                        <text class="fx-sub" x="133" y="331" text-anchor="end">6 processes</text>
+                        <text class="fx-name" x="627" y="98" text-anchor="start">HR</text>
+                        <text class="fx-sub" x="627" y="113" text-anchor="start">8 processes</text>
+                        <text class="fx-name" x="627" y="236" text-anchor="start">IT</text>
+                        <text class="fx-sub" x="627" y="251" text-anchor="start">14 processes</text>
+                        <text class="fx-name" x="627" y="374" text-anchor="start">Customer Service</text>
+                        <text class="fx-sub" x="627" y="389" text-anchor="start">9 processes</text>
+                    </svg>
+                    <div class="ir-legend">
+                        <span><i style="background:var(--accent);"></i> Incoming · feeds in</span>
+                        <span><i style="background:var(--success);"></i> Outgoing · flows to</span>
+                    </div>
+                    <p class="fx-note">Illustrative view with Procurement set as the focus function, any function can be
+                        the focus, with its incoming and outgoing process flows.</p>
+                </div>
+                <div class="ir-matrix-wrap" id="irMatrix" style="display:none;">
+                    <table class="ir-matrix">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>PR</th>
+                                <th>FN</th>
+                                <th>HR</th>
+                                <th>IT</th>
+                                <th>LG</th>
+                                <th>CS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>Procurement</th>
+                                <td><span class="cell self">·</span></td>
+                                <td><span class="cell S">S</span></td>
+                                <td><span class="cell L">L</span></td>
+                                <td><span class="cell S">S</span></td>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell M">M</span></td>
+                            </tr>
+                            <tr>
+                                <th>Finance</th>
+                                <td><span class="cell S">S</span></td>
+                                <td><span class="cell self">·</span></td>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell S">S</span></td>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell L">L</span></td>
+                            </tr>
+                            <tr>
+                                <th>HR</th>
+                                <td><span class="cell L">L</span></td>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell self">·</span></td>
+                                <td><span class="cell S">S</span></td>
+                                <td><span class="cell L">L</span></td>
+                                <td><span class="cell L">L</span></td>
+                            </tr>
+                            <tr>
+                                <th>IT</th>
+                                <td><span class="cell S">S</span></td>
+                                <td><span class="cell S">S</span></td>
+                                <td><span class="cell S">S</span></td>
+                                <td><span class="cell self">·</span></td>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell S">S</span></td>
+                            </tr>
+                            <tr>
+                                <th>Legal</th>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell L">L</span></td>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell self">·</span></td>
+                                <td><span class="cell M">M</span></td>
+                            </tr>
+                            <tr>
+                                <th>Customer Service</th>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell L">L</span></td>
+                                <td><span class="cell L">L</span></td>
+                                <td><span class="cell S">S</span></td>
+                                <td><span class="cell M">M</span></td>
+                                <td><span class="cell self">·</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="ir-mlegend">
+                        <span><span class="cell S">S</span> Strong dependency</span>
+                        <span><span class="cell M">M</span> Supporting link</span>
+                        <span><span class="cell L">L</span> Light touchpoint</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- PROCESS GOVERNANCE -->
+    <section class="sec" id="governance" style="background:var(--surface-2);">
+        <div class="wrap">
+            <div class="sec-head">
+                <span class="eyebrow">Process governance</span>
+                <h2>Designed processes, reviewed and endorsed</h2>
+                <p>No process goes live on a hunch. Tasree routes every model through review, endorsement and approval,
+                    with role-based accountability and a full audit trail.</p>
+            </div>
+            <div class="panel-grid">
+                <div class="copy">
+                    <h3>Endorsements &amp; approvals, built in</h3>
+                    <p>Authors submit, reviewers comment, owners endorse and approvers sign off, each step recorded
+                        against a version you can always roll back to.</p>
+                    <ul class="checklist">
+                        <li><span class="ck">✓</span> Role-based review, endorsement and approval steps</li>
+                        <li><span class="ck">✓</span> Electronic sign-off on every published version</li>
+                        <li><span class="ck">✓</span> Version history with full rollback</li>
+                        <li><span class="ck">✓</span> Audit trail of who approved what, and when</li>
+                    </ul>
+                </div>
+                <div class="panel-visual">
+                    <div class="vlabel"><span>Approval workflow</span><span>Draft to published</span></div>
+                    <div class="miniflow">
+                        <div class="mrow">
+                            <div class="ic">1</div>
+                            <div>
+                                <div class="t">Draft</div>
+                                <div class="s">Model the process</div>
+                            </div><span class="gov-role">Author</span>
+                        </div>
+                        <div class="mrow">
+                            <div class="ic">2</div>
+                            <div>
+                                <div class="t">Review</div>
+                                <div class="s">Comment &amp; refine</div>
+                            </div><span class="gov-role">Reviewer / QA</span>
+                        </div>
+                        <div class="mrow">
+                            <div class="ic">3</div>
+                            <div>
+                                <div class="t">Endorse</div>
+                                <div class="s">Confirm it reflects reality</div>
+                            </div><span class="gov-role">Process Owner</span>
+                        </div>
+                        <div class="mrow">
+                            <div class="ic">4</div>
+                            <div>
+                                <div class="t">Approve</div>
+                                <div class="s">Sign off to publish</div>
+                            </div><span class="gov-role">Dept. Head</span>
+                        </div>
+                        <div class="mrow">
+                            <div class="ic" style="background:var(--accent);color:#fff;">✓</div>
+                            <div>
+                                <div class="t">Publish</div>
+                                <div class="s">Live in the repository</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ISO 9001 / COMPLIANCE (tabbed) -->
+    <section class="sec" id="compliance">
+        <div class="wrap">
+            <div class="sec-head">
+                <span class="eyebrow">Compliance built in</span>
+                <h2>Stay aligned with ISO 9001</h2>
+                <p>Turn the standard into living, governed processes, documented, controlled and continually improved,
+                    without the paperwork overhead.</p>
+            </div>
+            <div class="panel-grid">
+                <div class="copy">
+                    <h3>Aligned with ISO 9001</h3>
+                    <p>Tasree turns the standard's intent, documented, controlled, continually improved processes, into
+                        everyday practice, without the paperwork overhead.</p>
+                    <ul class="checklist">
+                        <li><span class="ck">✓</span> Documented processes in one governed repository</li>
+                        <li><span class="ck">✓</span> Owners, approvals and controls on every step</li>
+                        <li><span class="ck">✓</span> Mine the as-is flow and track conformance in real time</li>
+                        <li><span class="ck">✓</span> Close the loop: discover, analyze, optimize, deploy</li>
+                    </ul>
+                    <div class="iso-chips" style="justify-content:flex-start;margin-top:24px;">
+                        <span><b>ISO 9001</b> Quality management</span>
+                    </div>
+                </div>
+                <div class="panel-visual">
+                    <div class="vlabel"><span>Continual improvement</span><span>ISO 9001 loop</span></div>
+                    <div class="miniflow">
+                        <div class="mrow">
+                            <div class="ic">1</div>
+                            <div>
+                                <div class="t">Document</div>
+                                <div class="s">Model &amp; control the process</div>
+                            </div>
+                        </div>
+                        <div class="mrow">
+                            <div class="ic">2</div>
+                            <div>
+                                <div class="t">Operate</div>
+                                <div class="s">Run with approvals built in</div>
+                            </div>
+                        </div>
+                        <div class="mrow">
+                            <div class="ic">3</div>
+                            <div>
+                                <div class="t">Evaluate</div>
+                                <div class="s">Mine &amp; track conformance</div>
+                            </div>
+                        </div>
+                        <div class="mrow">
+                            <div class="ic">4</div>
+                            <div>
+                                <div class="t">Improve</div>
+                                <div class="s">Optimize &amp; redeploy</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- SUBPAGE CTA -->
+    <section class="sec" id="demo" style="background:var(--surface-2);">
+        <div class="wrap">
+            <div class="sub-cta reveal">
+                <h2>See Process Management on one of your own processes</h2>
+                <p>Benchmark it L1 to L4, map its cross-functional dependencies, and check it against ISO 9001 in a
+                    guided demo.</p>
+                <div class="hero-cta" style="justify-content:center;">
+                    <a class="btn btn-white" href="index.html#demo"
+                        onclick="toast('Demo request captured'); return false;">Book a demo →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- FOOTER -->
+    <footer>
+        <div class="wrap foot-slim">
+            <div class="brand"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="6" cy="6.5" r="2.3" fill="currentColor" stroke="none"></circle>
+                        <circle cx="18" cy="6.5" r="2.3" fill="currentColor" stroke="none"></circle>
+                        <circle cx="12" cy="17.5" r="2.3" fill="currentColor" stroke="none"></circle>
+                        <path d="M8.1 7.8 10.6 15.4M15.9 7.8 13.4 15.4M8.3 6.5h7.4"></path>
+                    </svg></span> Tasree</div>
+            <p class="fs-tag">AI-native process management, modeling, mining, governance and optimization, unified in
+                one platform.</p>
+            <div class="fs-bottom">
+                <span>© 2026 Tasree, AI-Native Process Management Platform</span>
+                <span><a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a
+                        href="index.html#security">Security</a></span>
+            </div>
+        </div>
+    </footer>
+    <div class="toast" id="toast"><span class="tk">✓</span><span id="toast-msg">Done</span></div>
+    <script>
+        // Tabs
+        const tabs = document.querySelectorAll('.tab');
+        const panels = document.querySelectorAll('.panel');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                panels.forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.querySelector('.panel[data-panel="' + tab.dataset.tab + '"]').classList.add('active');
+            });
+        });
+        // Toast
+        let toastTimer;
+        function toast(msg) {
+            const el = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            el.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => el.classList.remove('show'), 2600);
+        }
+        // Interrelationship map / matrix toggle
+        (function () {
+            var btns = document.querySelectorAll('.ir-toggle button');
+            var map = document.getElementById('irMap');
+            var matrix = document.getElementById('irMatrix');
+            if (!btns.length || !map || !matrix) return;
+            btns.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    btns.forEach(function (x) { x.classList.remove('active'); });
+                    b.classList.add('active');
+                    var v = b.dataset.view;
+                    map.style.display = (v === 'map') ? 'block' : 'none';
+                    matrix.style.display = (v === 'matrix') ? 'block' : 'none';
+                });
+            });
+        })();
+        // Accent palettes
+        const palettes = {
+            Blue: { accent: '#2563eb', hover: '#1d4ed8', ink: '#0b1f3a', ink2: '#0f2748' },
+            Emerald: { accent: '#059669', hover: '#047857', ink: '#072a20', ink2: '#0b3a2c' },
+            Violet: { accent: '#7c3aed', hover: '#6d28d9', ink: '#1c1238', ink2: '#281a4e' },
+            Teal: { accent: '#0891b2', hover: '#0e7490', ink: '#072730', ink2: '#0a3742' },
+            Amber: { accent: '#ea7a0c', hover: '#c2620a', ink: '#2a1c08', ink2: '#3a2810' }
+        };
+        function isDark() { return document.documentElement.getAttribute('data-theme') === 'dark'; }
+        function applyAccent(accent, hover, ink, ink2) {
+            const s = document.documentElement.style;
+            const base = isDark() ? '#0a1626' : '#ffffff';
+            const mix = isDark() ? '22%' : '12%';
+            s.setProperty('--accent', accent);
+            s.setProperty('--accent-hover', hover || accent);
+            s.setProperty('--accent-soft', 'color-mix(in srgb, ' + accent + ' ' + mix + ', ' + base + ')');
+            if (ink) s.setProperty('--ink', ink);
+            if (ink2) s.setProperty('--ink-2', ink2);
+        }
+        function applyPalette(name) {
+            const p = palettes[name]; if (!p) return;
+            applyAccent(p.accent, p.hover, p.ink, p.ink2);
+            localStorage.setItem('tasree3-accent', JSON.stringify({ type: 'preset', name: name }));
+            document.querySelectorAll('.sw').forEach(b => b.classList.toggle('sel', b.dataset.pal === name));
+            const cc = document.getElementById('customColor'); if (cc) cc.value = p.accent;
+        }
+        function applyCustom(hex) {
+            function shade(h, f) {
+                const n = parseInt(h.slice(1), 16); let r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+                r = Math.round(r * f); g = Math.round(g * f); b = Math.round(b * f);
+                return '#' + [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+            }
+            applyAccent(hex, shade(hex, 0.82));
+            localStorage.setItem('tasree3-accent', JSON.stringify({ type: 'custom', hex: hex }));
+            document.querySelectorAll('.sw').forEach(b => b.classList.remove('sel'));
+        }
+        function restoreAccent() {
+            try {
+                const raw = localStorage.getItem('tasree3-accent'); if (!raw) return;
+                const v = JSON.parse(raw);
+                if (v.type === 'custom') applyCustom(v.hex);
+                else applyPalette(v.name);
+            } catch (e) { }
+        }
+        // Theme toggle (persisted) + accent persistence
+        (function () {
+            const root = document.documentElement;
+            const saved = localStorage.getItem('tasree3-theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'dark' || (!saved && prefersDark)) root.setAttribute('data-theme', 'dark');
+            restoreAccent();
+            const btn = document.getElementById('themeToggle');
+            if (btn) btn.addEventListener('click', () => {
+                const dark = root.getAttribute('data-theme') === 'dark';
+                if (dark) { root.removeAttribute('data-theme'); localStorage.setItem('tasree3-theme', 'light'); }
+                else { root.setAttribute('data-theme', 'dark'); localStorage.setItem('tasree3-theme', 'dark'); }
+                restoreAccent(); // re-tint accent-soft for the new mode
+            });
+            // Palette popover
+            const palBtn = document.getElementById('paletteBtn');
+            const pop = document.getElementById('palettePop');
+            if (palBtn && pop) {
+                palBtn.addEventListener('click', (e) => { e.stopPropagation(); pop.classList.toggle('open'); });
+                pop.addEventListener('click', (e) => e.stopPropagation());
+                document.addEventListener('click', () => pop.classList.remove('open'));
+                document.querySelectorAll('.sw').forEach(b =>
+                    b.addEventListener('click', () => applyPalette(b.dataset.pal)));
+                const cc = document.getElementById('customColor');
+                if (cc) cc.addEventListener('input', () => applyCustom(cc.value));
+            }
+            // Export to A4 PDF, popover with two modes
+            const exp = document.getElementById('exportPdf');
+            const expPop = document.getElementById('exportPop');
+            if (exp && expPop) {
+                exp.addEventListener('click', (e) => { e.stopPropagation(); expPop.classList.toggle('open'); });
+                expPop.addEventListener('click', (e) => e.stopPropagation());
+                document.addEventListener('click', () => expPop.classList.remove('open'));
+            }
+            const LOGO_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6.5" r="2.3" fill="currentColor" stroke="none"/><circle cx="18" cy="6.5" r="2.3" fill="currentColor" stroke="none"/><circle cx="12" cy="17.5" r="2.3" fill="currentColor" stroke="none"/><path d="M8.1 7.8 10.6 15.4M15.9 7.8 13.4 15.4M8.3 6.5h7.4"/></svg>';
+            function clearDeckChrome() { document.querySelectorAll('.print-hd, .print-ft').forEach(n => n.remove()); }
+            function buildDeckChrome() {
+                clearDeckChrome();
+                const slides = Array.from(document.querySelectorAll('.hero, section.sec'));
+                const total = String(slides.length).padStart(2, '0');
+                slides.forEach((s, i) => {
+                    const eb = s.querySelector('.eyebrow');
+                    const label = eb ? eb.textContent.replace(/[●•]/g, '').trim() : 'Overview';
+                    const hd = document.createElement('div');
+                    hd.className = 'print-hd';
+                    hd.innerHTML = '<span class="ph-brand"><span class="lm">' + LOGO_SVG + '</span>Tasree</span><span class="ph-sec">' + label + '</span>';
+                    const ft = document.createElement('div');
+                    ft.className = 'print-ft';
+                    ft.innerHTML = '<span>AI-Native Process Management Platform</span><span class="pf-pg">' + String(i + 1).padStart(2, '0') + ' / ' + total + '</span>';
+                    s.appendChild(hd); s.appendChild(ft);
+                });
+            }
+            function printAs(onepager, label) {
+                expPop && expPop.classList.remove('open');
+                document.body.classList.toggle('onepager', onepager);
+                if (onepager) clearDeckChrome(); else buildDeckChrome();
+                toast(label);
+                const cleanup = () => { document.body.classList.remove('onepager'); clearDeckChrome(); window.removeEventListener('afterprint', cleanup); };
+                window.addEventListener('afterprint', cleanup);
+                setTimeout(() => window.print(), 350);
+            }
+            const deck = document.getElementById('exportDeck');
+            const onep = document.getElementById('exportOnepager');
+            if (deck) deck.addEventListener('click', () => printAs(false, 'Pitch deck, choose “Save as PDF”, A4 Landscape'));
+            if (onep) onep.addEventListener('click', () => printAs(true, 'One-pager, choose “Save as PDF”, A4 Portrait'));
+            // Mobile menu toggle
+            const navToggle = document.getElementById('navToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if (navToggle && mobileMenu) {
+                navToggle.addEventListener('click', () => {
+                    const open = document.body.classList.toggle('menu-open');
+                    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+                    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+                });
+                mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+                    document.body.classList.remove('menu-open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                }));
+                window.matchMedia('(min-width: 981px)').addEventListener('change', (e) => {
+                    if (e.matches) document.body.classList.remove('menu-open');
+                });
+            }
+        })();
+        // Scroll reveal
+        const revealEls = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+            const io = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+            }, { threshold: 0.15 });
+            revealEls.forEach(el => io.observe(el));
+        } else {
+            revealEls.forEach(el => el.classList.add('in'));
+        }
+        // Animated count-up for the live process board stats
+        (function () {
+            const counters = document.querySelectorAll('[data-count]');
+            if (!counters.length) return;
+            const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            function format(el, val) {
+                const dec = parseInt(el.dataset.decimals || '0', 10);
+                const pre = el.dataset.prefix || '';
+                const suf = el.dataset.suffix || '';
+                return pre + val.toFixed(dec) + suf;
+            }
+            function run(el) {
+                const target = parseFloat(el.dataset.count);
+                if (reduce) { el.textContent = format(el, target); return; }
+                const dur = 1300, start = performance.now();
+                function tick(now) {
+                    const p = Math.min((now - start) / dur, 1);
+                    const eased = 1 - Math.pow(1 - p, 3);
+                    el.textContent = format(el, target * eased);
+                    if (p < 1) requestAnimationFrame(tick);
+                    else el.textContent = format(el, target);
+                }
+                requestAnimationFrame(tick);
+            }
+            if ('IntersectionObserver' in window) {
+                const cio = new IntersectionObserver((entries) => {
+                    entries.forEach(e => { if (e.isIntersecting) { run(e.target); cio.unobserve(e.target); } });
+                }, { threshold: 0.5 });
+                counters.forEach(el => cio.observe(el));
+            } else {
+                counters.forEach(run);
+            }
+        })();
+    </script>
+    <script defer=""
+        src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447"
+        integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ=="
+        data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;1c1d043b983a4ab1ba6234f2bc9c7c95&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

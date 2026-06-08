@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ChevronDown, Activity, ShieldCheck, Cpu, LayoutGrid, Building2, UserCheck, Users, Award } from 'lucide-react';
+import { Menu, X, ChevronDown, Activity, ShieldCheck, Cpu, LayoutGrid, Building2, UserCheck, Users, Award, Workflow } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Navbar({ onRequestDemo }) {
@@ -29,6 +29,7 @@ export default function Navbar({ onRequestDemo }) {
 
   const platformItems = [
     { name: 'Process Modeling', desc: 'Collaboratively map and simulate workflows.', path: '/features', icon: LayoutGrid, color: 'text-indigo-600' },
+    { name: 'Process Management', desc: 'Model, benchmark & govern every process.', path: '/process-management', icon: Workflow, color: 'text-blue-600' },
     { name: 'Process Mining', desc: 'Discover bottlenecks and analyze logs.', path: '/process-mining', icon: Activity, color: 'text-emerald-600' },
     { name: 'Governance & Audits', desc: 'Assure compliance and manage risks.', path: '/governance', icon: ShieldCheck, color: 'text-purple-600' },
     { name: 'AI Platform Operations', desc: 'Predictive analytics & AI copilot.', path: '/ai-features', icon: Cpu, color: 'text-pink-600' },
@@ -198,6 +199,9 @@ export default function Navbar({ onRequestDemo }) {
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest px-3 py-2">Platform</div>
               <Link to="/features" onClick={() => setIsOpen(false)} className="flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg">
                 <LayoutGrid className="w-4 h-4 text-indigo-500" /> Process Modeling
+              </Link>
+              <Link to="/process-management" onClick={() => setIsOpen(false)} className="flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg">
+                <Workflow className="w-4 h-4 text-blue-500" /> Process Management
               </Link>
               <Link to="/process-mining" onClick={() => setIsOpen(false)} className="flex items-center gap-3 px-3 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-lg">
                 <Activity className="w-4 h-4 text-emerald-500" /> Process Mining

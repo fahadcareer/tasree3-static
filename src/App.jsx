@@ -16,6 +16,7 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import FAQPage from './pages/FAQPage';
 import WhyTasree3 from './pages/WhyTasree3';
+import ProcessManagement from './pages/ProcessManagement';
 
 // Scroll Restoration Helper
 function ScrollToTop() {
@@ -51,6 +52,7 @@ export default function App() {
             <Route path="/pricing" element={<Pricing onRequestDemo={openDemoModal} />} />
             <Route path="/about" element={<About onRequestDemo={openDemoModal} />} />
             <Route path="/why-tasree3" element={<WhyTasree3 onRequestDemo={openDemoModal} />} />
+            <Route path="/process-management" element={<ProcessManagement onRequestDemo={openDemoModal} />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/faq" element={<FAQPage onRequestDemo={openDemoModal} />} />
           </Routes>
