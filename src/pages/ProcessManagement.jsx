@@ -11,9 +11,6 @@ export default function ProcessManagement({ onRequestDemo }) {
   // Modeling state
   const [modelingTab, setModelingTab] = useState('BPMN');
   
-  // Value chain interactive explorer state
-  const [selectedL1, setSelectedL1] = useState('4.0');
-  
   // Cross-functional view state ('map' vs 'matrix')
   const [cfView, setCfView] = useState('map');
 
@@ -23,17 +20,18 @@ export default function ProcessManagement({ onRequestDemo }) {
       code: '1.0',
       title: 'Develop Vision & Strategy',
       type: 'Operating',
-      bg: 'from-[#0B1F3A] to-[#0F2748]',
+      bg: '#0B1D33',
+      textColor: 'text-white',
       l2List: [
         {
           code: '1.1',
           title: 'Define the business concept',
-          l3List: ['1.1.1 Assess environment', '1.1.2 Survey market', '1.1.3 Define business model']
+          l3List: ['1.1.1 Assess environment', '1.1.2 Survey market']
         },
         {
           code: '1.2',
           title: 'Manage strategic initiatives',
-          l3List: ['1.2.1 Set targets', '1.2.2 Build roadmap', '1.2.3 Track strategic KPIs']
+          l3List: ['1.2.1 Set targets', '1.2.2 Build roadmap']
         }
       ]
     },
@@ -41,53 +39,56 @@ export default function ProcessManagement({ onRequestDemo }) {
       code: '2.0',
       title: 'Develop Products & Services',
       type: 'Operating',
-      bg: 'from-indigo-600 to-indigo-700',
+      bg: '#0A8DA8',
+      textColor: 'text-white',
       l2List: [
         {
           code: '2.1',
           title: 'Manage product portfolio',
-          l3List: ['2.1.1 Plan portfolio', '2.1.2 Evaluate concepts', '2.1.3 Refine product specs']
+          l3List: ['2.1.1 Plan portfolio', '2.1.2 Evaluate concepts']
         },
         {
           code: '2.2',
           title: 'Design & develop offerings',
-          l3List: ['2.2.1 Design specifications', '2.2.2 Test & pilot offering', '2.2.3 Launch new release']
+          l3List: ['2.2.1 Design', '2.2.2 Test & pilot']
         }
       ]
     },
     '3.0': {
       code: '3.0',
-      title: 'Market & Sell Offerings',
+      title: 'Market & Sell',
       type: 'Operating',
-      bg: 'from-violet-600 to-violet-700',
+      bg: '#166988',
+      textColor: 'text-white',
       l2List: [
         {
           code: '3.1',
           title: 'Understand markets & customers',
-          l3List: ['3.1.1 Segment target audience', '3.1.2 Analyze customer needs', '3.1.3 Run campaign insights']
+          l3List: ['3.1.1 Segment', '3.1.2 Analyze needs']
         },
         {
           code: '3.2',
           title: 'Develop & manage sales',
-          l3List: ['3.2.1 Generate leads', '3.2.2 Deliver sales pitch', '3.2.3 Close purchase orders']
+          l3List: ['3.2.1 Generate leads', '3.2.2 Close orders']
         }
       ]
     },
     '4.0': {
       code: '4.0',
-      title: 'Deliver & Operate (Procure)',
+      title: 'Deliver & Operate',
       type: 'Operating',
-      bg: 'from-blue-600 to-blue-700',
+      bg: '#1A367E',
+      textColor: 'text-white',
       l2List: [
         {
           code: '4.1',
           title: 'Plan & procure resources',
-          l3List: ['4.1.1 Plan supply requirements', '4.1.2 Source raw materials', '4.1.3 Select vendors']
+          l3List: ['4.1.1 Plan supply', '4.1.2 Source materials']
         },
         {
           code: '4.2',
           title: 'Deliver products & services',
-          l3List: ['4.2.1 Schedule fulfillment', '4.2.2 Fulfil & ship order', '4.2.3 Handle logistics and delivery']
+          l3List: ['4.2.1 Schedule', '4.2.2 Fulfil & ship']
         }
       ]
     },
@@ -95,30 +96,32 @@ export default function ProcessManagement({ onRequestDemo }) {
       code: '5.0',
       title: 'Manage Customer Service',
       type: 'Operating',
-      bg: 'from-sky-600 to-sky-700',
+      bg: '#1E5EF3',
+      textColor: 'text-white',
       l2List: [
         {
           code: '5.1',
           title: 'Manage customer requests',
-          l3List: ['5.1.1 Receive requests', '5.1.2 Resolve support tickets', '5.1.3 Escalate critical issues']
+          l3List: ['5.1.1 Receive', '5.1.2 Resolve']
         },
         {
           code: '5.2',
           title: 'Measure satisfaction',
-          l3List: ['5.2.1 Survey customer base', '5.2.2 Analyze NPS score', '5.2.3 Act on feedback loops']
+          l3List: ['5.2.1 Survey', '5.2.2 Act on feedback']
         }
       ]
     },
     '6.0': {
       code: '6.0',
-      title: 'Human Capital Management',
+      title: 'Human Capital',
       type: 'Support',
-      bg: 'from-slate-600 to-slate-700',
+      bg: '#54686A',
+      textColor: 'text-white',
       l2List: [
         {
           code: '6.1',
           title: 'Recruit & develop people',
-          l3List: ['6.1.1 Hire talent', '6.1.2 Train employees', '6.1.3 Evaluate performance']
+          l3List: ['6.1.1 Hire', '6.1.2 Train']
         }
       ]
     },
@@ -126,12 +129,13 @@ export default function ProcessManagement({ onRequestDemo }) {
       code: '7.0',
       title: 'Information Technology',
       type: 'Support',
-      bg: 'from-slate-600 to-slate-700',
+      bg: '#54686A',
+      textColor: 'text-white',
       l2List: [
         {
           code: '7.1',
           title: 'Manage IT & data',
-          l3List: ['7.1.1 Operate servers', '7.1.2 Secure database access', '7.1.3 Monitor integrations']
+          l3List: ['7.1.1 Operate', '7.1.2 Secure']
         }
       ]
     },
@@ -139,12 +143,13 @@ export default function ProcessManagement({ onRequestDemo }) {
       code: '8.0',
       title: 'Financial Resources',
       type: 'Support',
-      bg: 'from-slate-600 to-slate-700',
+      bg: '#54686A',
+      textColor: 'text-white',
       l2List: [
         {
           code: '8.1',
-          title: 'Manage finance & budget',
-          l3List: ['8.1.1 Budget allocations', '8.1.2 Report fiscal performance', '8.1.3 Audits and ledgers']
+          title: 'Manage finance',
+          l3List: ['8.1.1 Budget', '8.1.2 Report']
         }
       ]
     },
@@ -152,12 +157,13 @@ export default function ProcessManagement({ onRequestDemo }) {
       code: '9.0',
       title: 'Risk & Compliance',
       type: 'Support',
-      bg: 'from-slate-600 to-slate-700',
+      bg: '#54686A',
+      textColor: 'text-white',
       l2List: [
         {
           code: '9.1',
           title: 'Manage risk & controls',
-          l3List: ['9.1.1 Assess operational risks', '9.1.2 Run compliance audit', '9.1.3 Map hazard controls']
+          l3List: ['9.1.1 Assess', '9.1.2 Audit']
         }
       ]
     },
@@ -165,12 +171,13 @@ export default function ProcessManagement({ onRequestDemo }) {
       code: '10.0',
       title: 'Procurement & Assets',
       type: 'Support',
-      bg: 'from-slate-600 to-slate-700',
+      bg: '#54686A',
+      textColor: 'text-white',
       l2List: [
         {
           code: '10.1',
-          title: 'Manage physical assets',
-          l3List: ['10.1.1 Acquire assets', '10.1.2 Maintain infrastructure', '10.1.3 Decommission gear']
+          title: 'Manage assets',
+          l3List: ['10.1.1 Acquire', '10.1.2 Maintain']
         }
       ]
     }
@@ -383,134 +390,179 @@ export default function ProcessManagement({ onRequestDemo }) {
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-            <span className="text-xs font-bold uppercase tracking-wider text-brand-indigo dark:text-indigo-400">Process value chains</span>
-            <h2 className="text-3xl sm:text-4xl font-bold font-outfit text-slate-900 dark:text-white leading-tight">
-              Interactive End-to-End Process Value Chain
+          <div className="text-center max-w-3xl mx-auto mb-12 space-y-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-outfit text-slate-900 dark:text-white leading-tight">
+              Your end-to-end process value chain
             </h2>
             <p className="text-base text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
-              Explore how operating categories decompose. Select any L1 category to explore its underlying L2 process groups and L3 processes mapped in real time.
+              See the whole enterprise on one board, operating processes run left to right, management and support sit beneath, and every L1 category decomposes into its L2 process groups and L3 processes.
             </p>
           </div>
 
-          {/* Value Chain Interactive Grid */}
-          <div className="space-y-6">
-            {/* L1 Categories - Operating */}
-            <div>
-              <span className="block text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider mb-3 font-outfit">Operating Processes (Downstream Value Flow)</span>
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-                {Object.values(taxonomyData)
-                  .filter(cat => cat.type === 'Operating')
-                  .map(cat => (
-                    <button
-                      key={cat.code}
-                      onClick={() => setSelectedL1(cat.code)}
-                      className={`p-4 border rounded-xl text-left transition-all ${
-                        selectedL1 === cat.code
-                          ? 'bg-slate-900 border-slate-900 dark:bg-indigo-600 dark:border-indigo-600 text-white shadow-lg scale-[1.02]'
-                          : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-slate-800/80 dark:text-slate-200 dark:hover:border-slate-700'
-                      }`}
-                    >
-                      <div className={`text-[10px] font-bold font-outfit ${selectedL1 === cat.code ? 'text-brand-indigo dark:text-white' : 'text-slate-400'}`}>
-                        L1 Category {cat.code}
-                      </div>
-                      <div className="text-xs font-extrabold font-outfit mt-1.5 leading-snug truncate">
-                        {cat.title}
-                      </div>
-                    </button>
-                  ))}
-              </div>
-            </div>
+          {/* Board Scroll Container (Horizontal scroll on tablets/mobiles, standard display on large screens) */}
+          <div className="w-full overflow-x-auto pb-6 no-scrollbar">
+            <div className="min-w-[1020px] lg:min-w-0 space-y-8">
+              
+              {/* OPERATING PROCESSES */}
+              <div>
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest font-outfit whitespace-nowrap">
+                    Operating Processes · Value Flows Downstream →
+                  </span>
+                  <div className="h-px bg-slate-200 dark:bg-slate-800/80 flex-grow" />
+                </div>
+                
+                {/* 5 Column Grid */}
+                <div className="grid grid-cols-5 gap-3">
+                  {Object.values(taxonomyData)
+                    .filter(cat => cat.type === 'Operating')
+                    .map((cat, idx) => {
+                      const chevronClipPath = idx === 0
+                        ? 'polygon(0% 0%, calc(100% - 12px) 0%, 100% 50%, calc(100% - 12px) 100%, 0% 100%)'
+                        : 'polygon(0% 0%, 12px 50%, 0% 100%, calc(100% - 12px) 100%, 100% 50%, calc(100% - 12px) 0%)';
+                      
+                      return (
+                        <div key={cat.code} className="flex flex-col gap-3">
+                          {/* L1 Chevron Card */}
+                          <div 
+                            style={{ 
+                              clipPath: chevronClipPath,
+                              backgroundColor: cat.bg 
+                            }}
+                            className={`h-16 flex flex-col justify-center text-left text-white shadow-md relative group transition-transform duration-200 hover:scale-[1.01] ${
+                              idx === 0 ? 'pl-4 pr-6' : 'pl-7 pr-6'
+                            }`}
+                          >
+                            <span className="text-[10px] font-semibold opacity-75 font-outfit">{cat.code}</span>
+                            <span className="text-xs font-extrabold font-outfit leading-tight truncate">{cat.title}</span>
+                          </div>
 
-            {/* L1 Categories - Support */}
-            <div>
-              <span className="block text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 tracking-wider mb-3 font-outfit">Management & Support</span>
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-                {Object.values(taxonomyData)
-                  .filter(cat => cat.type === 'Support')
-                  .map(cat => (
-                    <button
-                      key={cat.code}
-                      onClick={() => setSelectedL1(cat.code)}
-                      className={`p-4 border rounded-xl text-left transition-all ${
-                        selectedL1 === cat.code
-                          ? 'bg-slate-900 border-slate-900 dark:bg-indigo-600 dark:border-indigo-600 text-white shadow-lg scale-[1.02]'
-                          : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-slate-800/80 dark:text-slate-200 dark:hover:border-slate-700'
-                      }`}
-                    >
-                      <div className={`text-[10px] font-bold font-outfit ${selectedL1 === cat.code ? 'text-brand-indigo dark:text-white' : 'text-slate-400'}`}>
-                        L1 Support {cat.code}
-                      </div>
-                      <div className="text-xs font-extrabold font-outfit mt-1.5 leading-snug truncate">
-                        {cat.title}
-                      </div>
-                    </button>
-                  ))}
-              </div>
-            </div>
+                          {/* L2 Stack */}
+                          <div className="flex flex-col gap-3">
+                            {cat.l2List.map((l2) => (
+                              <div 
+                                key={l2.code} 
+                                className="bg-white dark:bg-slate-900 border border-slate-250/85 dark:border-slate-800/80 rounded-xl p-3.5 space-y-3.5 shadow-xs transition-all duration-200 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700"
+                              >
+                                <div className="space-y-1">
+                                  <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 font-outfit block">
+                                    {l2.code}
+                                  </span>
+                                  <h4 className="text-xs font-extrabold text-slate-800 dark:text-slate-200 font-outfit leading-snug">
+                                    {l2.title}
+                                  </h4>
+                                </div>
 
-            {/* Expanded L2 & L3 Drawer */}
-            <AnimatePresence mode="wait">
-              {selectedL1 && (
-                <motion.div
-                  key={selectedL1}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-xl text-left dark:bg-slate-900 dark:border-slate-800/80"
-                >
-                  <div className="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-4 mb-5">
-                    <span className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/40 flex items-center justify-center text-brand-indigo dark:text-indigo-400 font-bold font-outfit">
-                      {taxonomyData[selectedL1].code}
-                    </span>
-                    <div>
-                      <h4 className="text-base font-extrabold text-slate-900 dark:text-white font-outfit">
-                        {taxonomyData[selectedL1].title}
-                      </h4>
-                      <span className="text-[9px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest font-outfit">
-                        L1 {taxonomyData[selectedL1].type} Level Decomposition
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {taxonomyData[selectedL1].l2List.map((l2) => (
-                      <div key={l2.code} className="bg-slate-50 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800 rounded-xl p-4 space-y-4">
-                        <div className="flex items-start gap-2">
-                          <span className="text-[10px] font-bold text-brand-indigo dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/40 px-2 py-0.5 rounded-md mt-0.5 font-outfit">
-                            L2 Group {l2.code}
-                          </span>
-                          <h5 className="text-sm font-extrabold text-slate-800 dark:text-slate-200 font-outfit">
-                            {l2.title}
-                          </h5>
-                        </div>
-
-                        <div className="space-y-2">
-                          <span className="block text-[8px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest font-outfit">MAPPED PROCESSES (L3)</span>
-                          <div className="grid grid-cols-1 gap-2">
-                            {l2.l3List.map((l3) => (
-                              <div key={l3} className="bg-white dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800/60 p-2.5 rounded-lg flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-sm transition-all">
-                                <span className="w-1.5 h-1.5 rounded-full bg-brand-emerald flex-shrink-0" />
-                                {l3}
+                                {/* L3 Pills Grid */}
+                                <div className="flex flex-wrap gap-1.5">
+                                  {l2.l3List.map((l3) => (
+                                    <div 
+                                      key={l3} 
+                                      className="bg-slate-50/70 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800/80 px-2 py-1.5 rounded-lg text-[9px] font-semibold text-slate-550 dark:text-slate-400 flex items-center justify-center shadow-2xs hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+                                    >
+                                      {l3}
+                                    </div>
+                                  ))}
+                                </div>
                               </div>
                             ))}
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      );
+                    })}
+                </div>
+              </div>
 
-                  <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-[10px] text-slate-400 dark:text-slate-500 font-bold font-outfit">
-                    <span>Illustrative structure using APQC Process Classification Framework taxonomy.</span>
-                    <button onClick={onRequestDemo} className="text-brand-indigo dark:text-indigo-400 hover:underline flex items-center gap-1 font-bold cursor-pointer">
-                      Customize Taxonomy Map &rarr;
-                    </button>
+              {/* MANAGEMENT & SUPPORT */}
+              <div>
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest font-outfit whitespace-nowrap">
+                    Management & Support
+                  </span>
+                  <div className="h-px bg-slate-200 dark:bg-slate-800/80 flex-grow" />
+                </div>
+
+                {/* 5 Column Grid */}
+                <div className="grid grid-cols-5 gap-3">
+                  {Object.values(taxonomyData)
+                    .filter(cat => cat.type === 'Support')
+                    .map((cat) => {
+                      return (
+                        <div key={cat.code} className="flex flex-col gap-3">
+                          {/* L1 support rectangular card */}
+                          <div 
+                            style={{ backgroundColor: cat.bg }}
+                            className="h-16 flex flex-col justify-center text-left text-white shadow-md rounded-xl px-4 transition-transform duration-200 hover:scale-[1.01]"
+                          >
+                            <span className="text-[10px] font-semibold opacity-75 font-outfit">{cat.code}</span>
+                            <span className="text-xs font-extrabold font-outfit leading-tight truncate">{cat.title}</span>
+                          </div>
+
+                          {/* L2 Stack */}
+                          <div className="flex flex-col gap-3">
+                            {cat.l2List.map((l2) => (
+                              <div 
+                                key={l2.code} 
+                                className="bg-white dark:bg-slate-900 border border-slate-250/85 dark:border-slate-800/80 rounded-xl p-3.5 space-y-3.5 shadow-xs transition-all duration-200 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-700"
+                              >
+                                <div className="space-y-1">
+                                  <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 font-outfit block">
+                                    {l2.code}
+                                  </span>
+                                  <h4 className="text-xs font-extrabold text-slate-800 dark:text-slate-200 font-outfit leading-snug">
+                                    {l2.title}
+                                  </h4>
+                                </div>
+
+                                {/* L3 Pills Grid */}
+                                <div className="flex flex-wrap gap-1.5">
+                                  {l2.l3List.map((l3) => (
+                                    <div 
+                                      key={l3} 
+                                      className="bg-slate-50/70 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800/80 px-2 py-1.5 rounded-lg text-[9px] font-semibold text-slate-550 dark:text-slate-400 flex items-center justify-center shadow-2xs hover:bg-slate-100 dark:hover:bg-slate-900 hover:text-slate-700 dark:hover:text-slate-200 transition-colors"
+                                    >
+                                      {l3}
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </div>
+
+              {/* Legend & Footnote */}
+              <div className="pt-4 border-t border-slate-200/65 dark:border-slate-800/80 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                {/* Legend Pill Items */}
+                <div className="flex flex-wrap items-center justify-center gap-4">
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300">
+                    <span className="w-4 h-4 rounded-md bg-[#1E5EF3] shadow-xs" />
+                    <span>Operating processes</span>
                   </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300">
+                    <span className="w-4 h-4 rounded-md bg-[#54686A] shadow-xs" />
+                    <span>Management & support</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-600 dark:text-slate-300">
+                    <span className="px-2 py-1 rounded-lg bg-slate-50/70 dark:bg-slate-950 border border-slate-200/60 dark:border-slate-800/80 text-[9px] font-semibold text-slate-550 dark:text-slate-400 shadow-2xs">
+                      1.1.1 Process
+                    </span>
+                    <span>L3 process</span>
+                  </div>
+                </div>
+
+                {/* Subtext */}
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 font-bold font-outfit text-center sm:text-right">
+                  Illustrative structure using APQC Process Classification Framework numbering. Your own taxonomy maps the same way.
+                </span>
+              </div>
+
+            </div>
           </div>
+
         </div>
       </section>
 
