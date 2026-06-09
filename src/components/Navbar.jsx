@@ -198,12 +198,12 @@ export default function Navbar({ onRequestDemo }) {
             >
               Watch Tour
             </button>
-            <button 
-              onClick={onRequestDemo}
-              className="px-4 py-2 bg-gradient-primary hover:opacity-90 active:scale-[0.98] text-white text-sm font-semibold rounded-lg transition-all shadow-md shadow-brand-indigo/15 cursor-pointer"
+            <a 
+              href="https://meeranaepc.netlify.app/"
+              className="px-4 py-2 bg-gradient-primary hover:opacity-90 active:scale-[0.98] text-white text-sm font-semibold rounded-lg transition-all shadow-md shadow-brand-indigo/15 cursor-pointer text-center"
             >
-              Request Enterprise Demo
-            </button>
+              Try Now
+            </a>
           </div>
 
           {/* Mobile Hamburger */}
@@ -285,12 +285,13 @@ export default function Navbar({ onRequestDemo }) {
                   {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4" />}
                 </button>
               </div>
-              <button 
-                onClick={() => { setIsOpen(false); onRequestDemo(); }}
-                className="w-full py-2.5 bg-gradient-primary text-white text-sm font-semibold rounded-lg text-center shadow-lg"
+              <a 
+                href="https://meeranaepc.netlify.app/"
+                onClick={() => setIsOpen(false)}
+                className="w-full py-2.5 bg-gradient-primary text-white text-sm font-semibold rounded-lg text-center shadow-lg block"
               >
-                Request Enterprise Demo
-              </button>
+                Try Now
+              </a>
             </div>
           </motion.div>
         )}
